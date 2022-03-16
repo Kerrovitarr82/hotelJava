@@ -1,84 +1,98 @@
 package fourth;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class Admin {
-    private ArrayList<Room> rooms = new ArrayList<>();
-    private ArrayList<Service> services = new ArrayList<>();
-    private ArrayList<Guest> guests = new ArrayList<>(Arrays.asList(new Guest[10]));
+    private List<Room> rooms = new ArrayList<>();
+    private List<Service> services = new ArrayList<>();
 
     public Admin() {
-        rooms.add(new Room(1, "none", 1000, null));
-        rooms.add(new Room(2, "none", 1000, null));
-        rooms.add(new Room(3, "none", 2000, null));
-        rooms.add(new Room(4, "none", 2000, null));
-        rooms.add(new Room(5, "none", 3000, null));
-        services.add(new Service("Завтрак", 200));
+        rooms.add(new Room(1, Status.NONE, 1000, null));
+        rooms.add(new Room(2, Status.NONE, 1000, null));
+        rooms.add(new Room(3, Status.NONE, 2000, null));
+        rooms.add(new Room(4, Status.NONE, 2000, null));
+        rooms.add(new Room(5, Status.NONE, 3000, null));
+        services.add(new Service("Завтрак", 200, 1));
     }
 
     public void addToRoom(int roomNum, Guest guest) {
-        rooms.get(roomNum).setGuest(guest);
-        //guest.setRoom(rooms.get(roomNum));
-        guests.set(roomNum, guest);
+        for (Room room : rooms) {
+            if (room.getNumber() == roomNum) {
+                room.setGuest(guest);
+                guest.setRoom(room);
+                break;
+            }
+        }
     }
 
     public void deleteFromRoom(int roomNum) {
-        //rooms.get(roomNum).getGuest().setRoom(null);
-        rooms.get(roomNum).setGuest(null);
-        guests.set(roomNum, null);
+        for (Room room : rooms) {
+            if (room.getNumber() == roomNum) {
+                room.getGuest().setRoom(null);
+                room.setGuest(null);
+                break;
+            }
+        }
     }
 
-    public void underRepair(int roomNum) {
-        rooms.get(roomNum).setStatus("Ремонт");
-    }
-
-    public void serviced(int roomNum) {
-        rooms.get(roomNum).setStatus("Обслуживается");
+    public void changeStatus(int roomNum, Status status) {
+        for (Room room : rooms) {
+            if (room.getNumber() == roomNum) {
+                room.setStatus(status);
+                break;
+            }
+        }
     }
 
     public void changePriceToRoom(int roomNum, int price) {
-        rooms.get(roomNum).setPrice(price);
+        for (Room room : rooms) {
+            if (room.getNumber() == roomNum) {
+                room.setPrice(price);
+                break;
+            }
+        }
     }
 
-    public void changePriceToService(String name, int price) {
+    public void changePriceToService(int id, int price) {
         for (Service service : services) {
-            if (service.getName() == name) {
+            if (service.getId() == id) {
                 service.setPrice(price);
                 break;
             }
         }
     }
 
-    public void addRoom(int price) {
-        rooms.add(new Room(rooms.size(), "none", price, null));
+    public void addRoom(int price, int roomNum) {
+        rooms.add(new Room(roomNum, Status.NONE, price, null));
     }
 
-    public void addService(String name, int price) {
-        services.add(new Service(name, price));
+    public void addService(String name, int price, int id) {
+        services.add(new Service(name, price, id));
     }
 
-    public ArrayList<Room> getRooms() {
+    public List<Room> getRooms() {
         return rooms;
+    }
+
+    public Room getRoom(int roomNum) {
+        for (Room room : rooms) {
+            if (room.getNumber() == roomNum) {
+                return room;
+            }
+        }
+        return null;
     }
 
     public void setRooms(ArrayList<Room> rooms) {
         this.rooms = rooms;
     }
 
-    public ArrayList<Service> getServices() {
+    public List<Service> getServices() {
         return services;
     }
 
     public void setServices(ArrayList<Service> services) {
         this.services = services;
-    }
-
-    public ArrayList<Guest> getGuests() {
-        return guests;
-    }
-
-    public void setGuests(ArrayList<Guest> guests) {
-        this.guests = guests;
     }
 }
