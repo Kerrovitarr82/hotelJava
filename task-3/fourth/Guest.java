@@ -2,7 +2,7 @@ package fourth;
 
 public class Guest {
     private String name;
-    //private Room room;
+    private Room room;
 
     Guest(String name) {
         this.name = name;
@@ -16,27 +16,19 @@ public class Guest {
         this.name = name;
     }
 
-//    public Room getRoom() {
-//        return room;
-//    }
+    public Room getRoom() {
+        return room;
+    }
 
-//    public void setRoom(Room room) {
-//        this.room = room;
-//    }
-
-//    @Override
-//    public String toString() {
-//        return "Guest{" +
-//                "name='" + name + '\'' +
-//                ", room=" + room +
-//                '}';
-//    }
-
+    public void setRoom(Room room) {
+        this.room = room;
+    }
 
     @Override
     public String toString() {
         return "Guest{" +
                 "name='" + name + '\'' +
+                ", roomNumber=" + room.getNumber() +
                 '}';
     }
 }
