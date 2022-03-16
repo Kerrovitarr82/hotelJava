@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>fourth</OriginalElement>
+  <nodes>
+    <node x="359.3814102564102" y="224.0392501464558">fourth.Room</node>
+    <node x="158.37606837606842" y="985.0">fourth.Main</node>
+    <node x="32.59401709401712" y="536.0">fourth.Admin</node>
+    <node x="114.63247863247865" y="233.0">fourth.Service</node>
+    <node x="267.0668664473586" y="-13.544229642647917">fourth.Guest</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="fourth.Room" target="fourth.Guest" relationship="TO_ONE">
+      <point x="-52.75" y="-138.5" />
+      <point x="366.00883855687107" y="224.0392501464558" />
+      <point x="28.94197210951245" y="64.51933216168717" />
+    </edge>
+    <edge source="fourth.Admin" target="fourth.Room" relationship="CREATE">
+      <point x="-66.5" y="-198.5" />
+      <point x="99.09401709401712" y="446.1968365553603" />
+      <point x="394.5480769230769" y="446.1968365553603" />
+      <point x="-70.33333333333331" y="138.5" />
+    </edge>
+    <edge source="fourth.Admin" target="fourth.Guest" relationship="TO_MANY">
+      <point x="66.5" y="-198.5" />
+      <point x="232.09401709401712" y="656.6127709431751" />
+      <point x="337.0668664473586" y="656.6127709431751" />
+      <point x="0.0" y="66.5" />
+    </edge>
+    <edge source="fourth.Main" target="fourth.Guest" relationship="CREATE">
+      <point x="-38.75" y="-41.5" />
+      <point x="197.12606837606842" y="954.0" />
+      <point x="0.0" y="954.0" />
+      <point x="0.0" y="187.10486233157587" />
+      <point x="311.15261493768594" y="187.10486233157587" />
+      <point x="-25.91425150967268" y="68.24399531341535" />
+    </edge>
+    <edge source="fourth.Main" target="fourth.Room" relationship="DEPENDENCY">
+      <point x="63.32575570045759" y="-39.52108963093144" />
+      <point x="299.201824076526" y="964.0" />
+      <point x="535.2147435897435" y="964.0" />
+      <point x="70.33333333333331" y="138.5" />
+    </edge>
+    <edge source="fourth.Main" target="fourth.Admin" relationship="CREATE">
+      <point x="-38.75" y="-41.5" />
+      <point x="197.12606837606842" y="954.0" />
+      <point x="165.59401709401712" y="954.0" />
+      <point x="0.0" y="198.5" />
+    </edge>
+    <edge source="fourth.Main" target="fourth.Service" relationship="DEPENDENCY">
+      <point x="38.75" y="-41.5" />
+      <point x="274.6260683760684" y="949.2196836555361" />
+      <point x="382.4253075571178" y="949.2196836555361" />
+      <point x="382.4253075571178" y="523.1212653778558" />
+      <point x="192.63247863247864" y="523.1212653778558" />
+      <point x="0.0" y="90.5" />
+    </edge>
+    <edge source="fourth.Admin" target="fourth.Room" relationship="TO_MANY">
+      <point x="66.5" y="-198.5" />
+      <point x="232.09401709401712" y="656.6127709431751" />
+      <point x="360.1717287789344" y="656.6127709431751" />
+      <point x="360.1717287789344" y="488.5442296426479" />
+      <point x="464.8814102564102" y="488.5442296426479" />
+      <point x="0.0" y="138.5" />
+    </edge>
+    <edge source="fourth.Admin" target="fourth.Service" relationship="CREATE">
+      <point x="-24.939351775546157" y="-202.62243702401872" />
+      <point x="140.65466531847096" y="475.0" />
+      <point x="140.63247863247864" y="475.0" />
+      <point x="-52.0" y="90.5" />
+    </edge>
+    <edge source="fourth.Admin" target="fourth.Guest" relationship="CREATE">
+      <point x="-122.13911744631358" y="-193.85852372583486" />
+      <point x="43.45489964770354" y="494.0" />
+      <point x="44.132478632478666" y="494.0" />
+      <point x="44.132478632478666" y="150.4557703573521" />
+      <point x="290.400199780692" y="150.4557703573521" />
+      <point x="-46.66666666666666" y="66.5" />
+    </edge>
+    <edge source="fourth.Admin" target="fourth.Service" relationship="TO_MANY">
+      <point x="66.5" y="-198.5" />
+      <point x="232.09401709401712" y="656.6127709431751" />
+      <point x="321.13247863247864" y="656.6127709431751" />
+      <point x="321.13247863247864" y="475.0" />
+      <point x="244.63247863247864" y="475.0" />
+      <point x="52.0" y="90.5" />
+    </edge>
+    <edge source="fourth.Room" target="fourth.Guest" relationship="DEPENDENCY">
+      <point x="52.75" y="-138.5" />
+      <point x="517.6314102564102" y="164.0" />
+      <point x="401.18190609175747" y="164.0" />
+      <point x="64.11503964439885" y="66.90949033391915" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.8051470588235293" showDependencies="true" x="219.4011002238965" y="603.0000000000001" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
