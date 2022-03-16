@@ -1,9 +1,8 @@
 package third;
 
-public class Engine implements IProductPart{
-    String engine;
+public class Engine extends Part implements IProductPart{
 
-    Engine(String engine) {
-        this.engine = engine;
+    public Engine(String name) {
+        super(name);
     }
 }

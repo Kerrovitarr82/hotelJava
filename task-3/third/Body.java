@@ -1,9 +1,8 @@
 package third;
 
-public class Body implements IProductPart{
-    String body;
+public class Body extends Part implements IProductPart{
 
-    Body(String body) {
-        this.body = body;
+    public Body(String name) {
+        super(name);
     }
 }

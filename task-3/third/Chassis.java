@@ -1,9 +1,8 @@
 package third;
 
-public class Chassis implements IProductPart{
-    String chassis;
+public class Chassis extends Part implements IProductPart{
 
-    Chassis(String chassis) {
-        this.chassis = chassis;
+    public Chassis(String name) {
+        super(name);
     }
 }
