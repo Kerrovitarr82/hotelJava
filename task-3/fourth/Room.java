@@ -2,22 +2,22 @@ package fourth;
 
 public class Room {
     private int number;
-    private String status;
+    private Status status;
     private int price;
     private Guest guest;
 
-    public Room(int number, String status, int price, Guest guest) {
+    public Room(int number, Status status, int price, Guest guest) {
         this.number = number;
         this.status = status;
         this.price = price;
         this.guest = guest;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
