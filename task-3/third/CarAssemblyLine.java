@@ -13,9 +13,8 @@ public class CarAssemblyLine implements IAssemblyLine {
         Part engine = (Engine) new CreateThirdPart().buildProductPart();
         iProduct.installThirdPart(engine);
 
-        Car car = new Car(body, chassis, engine);
         System.out.println("Машина собрана");
 
-        return car;
+        return iProduct;
     }
 }
