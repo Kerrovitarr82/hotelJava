@@ -1,4 +1,4 @@
-public enum Choice {
+public enum SortAndTotalChoice {
     ALL_ROOMS,
     FREE_ROOMS,
     GUESTS,

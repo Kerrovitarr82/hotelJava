@@ -31,6 +31,16 @@ public class Admin {
     public void deleteFromRoom(int roomNum) {
         for (Room room : rooms) {
             if (room.getNumber() == roomNum) {
+                room.setGuests(null);
+                room.setStatus(Status.FREE);
+                break;
+            }
+        }
+    }
+
+    public void deleteGuest(int roomNum) {
+        for (Room room : rooms) {
+            if (room.getNumber() == roomNum) {
                 for (Guest guest : room.getGuests()) {
                     guest.setRoom(null);
                     this.allGuests.remove(guest);
@@ -99,17 +109,24 @@ public class Admin {
         }
     }
 
-    public int totalNumberOf(Choice choice) {
-        int total = 0;
-        switch (choice) {
+
+
+    public int totalNumberOf(SortAndTotalChoice sortAndTotalChoice) {
+        switch (sortAndTotalChoice) {
             case FREE_ROOMS:
-                total = rooms.size() - allGuests.size();
-                break;
+                return totalNumberOfFreeRooms();
             case GUESTS:
-                total = allGuests.size();
-                break;
+                return totalNumberOfGuests();
         }
-        return total;
+        return -1;
+    }
+
+    private int totalNumberOfGuests() {
+        return allGuests.size();
+    }
+
+    private int totalNumberOfFreeRooms() {
+        return rooms.size() - allGuests.size();
     }
 
     public List<Room> listOfFreeRoomsByDate(Calendar date) {
@@ -124,17 +141,11 @@ public class Admin {
         return roomList;
     }
 
-    public void printFunc(Collection collection) {
-        for (Object item : collection) {
-            System.out.println(item);
-        }
-    }
-
     public void allRoomsSort() {
         Comparator<Room> roomComparator = new RoomPriceComparator().thenComparing(new RoomMaxGuestsComparator()).thenComparing(new RoomStarsComparator());
         Set<Room> roomTreeSet = new TreeSet<>(roomComparator);
         roomTreeSet.addAll(rooms);
-        printFunc(roomTreeSet);
+        new UtilityFunctions().printFunc(roomTreeSet);
     }
 
     public void freeRoomsSort() {
@@ -145,14 +156,14 @@ public class Admin {
                 roomTreeSet.add(room);
             }
         }
-        printFunc(roomTreeSet);
+        new UtilityFunctions().printFunc(roomTreeSet);
     }
 
     public void guestSort() {
         Comparator<Guest> guestComparator = new GuestAlphabetComparator().thenComparing(new GuestDateComparator());
         Set<Guest> guestTreeSet = new TreeSet<>(guestComparator);
         guestTreeSet.addAll(allGuests);
-        printFunc(guestTreeSet);
+        new UtilityFunctions().printFunc(guestTreeSet);
     }
 
     public void roomsAndServicesSort() {
@@ -162,8 +173,8 @@ public class Admin {
         Set<Service> serviceTreeSet = new TreeSet<>(serviceComparator);
         roomTreeSet.addAll(rooms);
         serviceTreeSet.addAll(services);
-        printFunc(roomTreeSet);
-        printFunc(serviceTreeSet);
+        new UtilityFunctions().printFunc(roomTreeSet);
+        new UtilityFunctions().printFunc(serviceTreeSet);
     }
 
     public void guestServicesSort(String name) {
@@ -175,11 +186,11 @@ public class Admin {
                 break;
             }
         }
-        printFunc(serviceTreeSet);
+        new UtilityFunctions().printFunc(serviceTreeSet);
     }
 
-    public void getSorted(Choice choice) {
-        switch (choice) {
+    public void getSorted(SortAndTotalChoice sortAndTotalChoice) {
+        switch (sortAndTotalChoice) {
             case ALL_ROOMS:
                 allRoomsSort();
                 break;
