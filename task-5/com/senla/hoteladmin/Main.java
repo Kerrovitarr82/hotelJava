@@ -1,6 +1,10 @@
 package com.senla.hoteladmin;
 
+import com.senla.hoteladmin.controller.GuestController;
+import com.senla.hoteladmin.controller.MaintenanceController;
 import com.senla.hoteladmin.controller.RoomController;
+import com.senla.hoteladmin.controller.impl.GuestControllerImpl;
+import com.senla.hoteladmin.controller.impl.MaintenanceControllerImpl;
 import com.senla.hoteladmin.controller.impl.RoomControllerImpl;
 import com.senla.hoteladmin.dao.GuestDao;
 import com.senla.hoteladmin.dao.MaintenanceDao;
@@ -29,7 +33,8 @@ public class Main {
         GuestService guestService = new GuestServiceImpl(guestDao, roomDao, guestDao, maintenanceDao);
         MaintenanceService maintenanceService = new MaintenanceServiceImpl(maintenanceDao, roomDao, guestDao, maintenanceDao);
         RoomController roomController = new RoomControllerImpl(roomService, guestService, idCreatorForEntities);
-
+        GuestController guestController = new GuestControllerImpl(roomService, guestService, idCreatorForEntities);
+        MaintenanceController maintenanceController = new MaintenanceControllerImpl(roomService, guestService, maintenanceService, idCreatorForEntities);
 
         boolean exitBool = true;
         boolean exitFromSectionBool = true;
@@ -37,30 +42,32 @@ public class Main {
         int mainSwitchChoice = 0;
         int sectionSwitchChoice = 0;
         while (exitBool) {
-            System.out.println("Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð´ÐµÐ¹ÑÑ‚Ð²Ð¸Ðµ\n");
-            System.out.println("Ð Ð°Ð·Ð´ÐµÐ» Ð½Ð¾Ð¼ÐµÑ€Ð¾Ð²" +
-                    "\n1) Ð Ð°Ð·Ð´ÐµÐ» Ð½Ð¾Ð¼ÐµÑ€Ð¾Ð²" +
-                    "\n2) Ð Ð°Ð·Ð´ÐµÐ» Ð³Ð¾ÑÑ‚ÐµÐ¹" +
-                    "\n3) Ð Ð°Ð·Ð´ÐµÐ» ÑƒÑÐ»ÑƒÐ³" +
-                    "\n4) Ð’Ñ‹Ñ…Ð¾Ð´");
+            System.out.println("\nÂûáåðèòå äåéñòâèå");
+            System.out.println("\nÐàçäåëû" +
+                    "\n1) Ðàçäåë íîìåðîâ" +
+                    "\n2) Ðàçäåë ãîñòåé" +
+                    "\n3) Ðàçäåë óñëóã" +
+                    "\n4) Âûõîä");
             mainSwitchChoice = scanner.nextInt();
-
+            scanner.nextLine();
+            exitFromSectionBool = true;
             switch (mainSwitchChoice) {
                 case 1:
                     while (exitFromSectionBool) {
-                        System.out.println("Ð Ð°Ð·Ð´ÐµÐ» Ð½Ð¾Ð¼ÐµÑ€Ð¾Ð²" +
-                                "\n1) Ð¡Ð¾Ð·Ð´Ð°Ñ‚ÑŒ Ð½Ð¾Ð¼ÐµÑ€" +
-                                "\n2) Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð³Ð¾ÑÑ‚Ñ Ð² Ð½Ð¾Ð¼ÐµÑ€" +
-                                "\n3) Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ Ð³Ð¾ÑÑ‚ÐµÐ¹ Ð¸Ð· Ð½Ð¾Ð¼ÐµÑ€Ð°" +
-                                "\n4) Ð˜Ð·Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ ÑÑ‚Ð°Ñ‚ÑƒÑ Ð½Ð¾Ð¼ÐµÑ€Ð°" +
-                                "\n5) Ð˜Ð·Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ Ñ†ÐµÐ½Ñƒ Ð½Ð¾Ð¼ÐµÑ€Ð°" +
-                                "\n6) Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ Ð¾Ð±Ñ‰ÐµÐµ ÐºÐ¾Ð»-Ð²Ð¾ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½Ñ‹Ñ… Ð½Ð¾Ð¼ÐµÑ€Ð¾Ð²" +
-                                "\n7) Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ Ð¾Ð±Ñ‰ÐµÐµ ÐºÐ¾Ð»-Ð²Ð¾ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½Ñ‹Ñ… Ð½Ð¾Ð¼ÐµÑ€Ð¾Ð² Ð¿Ð¾ÑÐ»Ðµ Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð½Ð¾Ð¹ Ð´Ð°Ñ‚Ñ‹" +
-                                "\n8) Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ Ð½Ð¾Ð¼ÐµÑ€Ð° Ð² ÑÐ¾Ñ€Ñ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð½Ð¾Ð¼ Ð²Ð¸Ð´Ðµ" +
-                                "\n9) Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ Ð¿Ð¾ÑÐ»ÐµÐ´Ð½Ð¸Ñ… Ñ‚Ñ€ÐµÑ… Ð³Ð¾ÑÑ‚ÐµÐ¹ Ð½Ð¾Ð¼ÐµÑ€Ð°" +
-                                "\n10) Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ Ð´ÐµÑ‚Ð°Ð»Ð¸ Ð½Ð¾Ð¼ÐµÑ€Ð°" +
-                                "\n11) Ð’Ñ‹Ñ…Ð¾Ð´");
+                        System.out.println("\nÐàçäåë íîìåðîâ" +
+                                "\n1) Ñîçäàòü íîìåð" +
+                                "\n2) Äîáàâèòü ãîñòÿ â íîìåð" +
+                                "\n3) Óäàëèòü ãîñòåé èç íîìåðà" +
+                                "\n4) Èçìåíèòü ñòàòóñ íîìåðà" +
+                                "\n5) Èçìåíèòü öåíó íîìåðà" +
+                                "\n6) Âûâåñòè îáùåå êîë-âî ñâîáîäíûõ íîìåðîâ" +
+                                "\n7) Âûâåñòè îáùåå êîë-âî ñâîáîäíûõ íîìåðîâ ïîñëå îïðåäåëåííîé äàòû" +
+                                "\n8) Âûâåñòè íîìåðà â ñîðòèðîâàííîì âèäå" +
+                                "\n9) Âûâåñòè ïîñëåäíèõ òðåõ ãîñòåé íîìåðà" +
+                                "\n10) Âûâåñòè äåòàëè íîìåðà" +
+                                "\n11) Âûõîä");
                         sectionSwitchChoice = scanner.nextInt();
+                        scanner.nextLine();
                         switch (sectionSwitchChoice) {
                             case 1 -> roomController.createRoom();
                             case 2 -> roomController.addToRoom();
@@ -77,30 +84,44 @@ public class Main {
                     }
                     break;
                 case 2:
-                    System.out.println("Ð Ð°Ð·Ð´ÐµÐ» Ð³Ð¾ÑÑ‚ÐµÐ¹" +
-                            "\n1) Ð¡Ð¾Ð·Ð´Ð°Ñ‚ÑŒ Ð½Ð¾Ð¼ÐµÑ€" +
-                            "\n2) Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð³Ð¾ÑÑ‚Ñ Ð² Ð½Ð¾Ð¼ÐµÑ€" +
-                            "\n3) Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ Ð³Ð¾ÑÑ‚ÐµÐ¹ Ð¸Ð· Ð½Ð¾Ð¼ÐµÑ€Ð°" +
-                            "\n4) Ð˜Ð·Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ ÑÑ‚Ð°Ñ‚ÑƒÑ Ð½Ð¾Ð¼ÐµÑ€Ð°" +
-                            "\n5) Ð˜Ð·Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ Ñ†ÐµÐ½Ñƒ Ð½Ð¾Ð¼ÐµÑ€Ð°" +
-                            "\n6) Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ Ð¾Ð±Ñ‰ÐµÐµ ÐºÐ¾Ð»-Ð²Ð¾ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½Ñ‹Ñ… Ð½Ð¾Ð¼ÐµÑ€Ð¾Ð²" +
-                            "\n7) Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ Ð¾Ð±Ñ‰ÐµÐµ ÐºÐ¾Ð»-Ð²Ð¾ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½Ñ‹Ñ… Ð½Ð¾Ð¼ÐµÑ€Ð¾Ð² Ð¿Ð¾ÑÐ»Ðµ Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð½Ð¾Ð¹ Ð´Ð°Ñ‚Ñ‹" +
-                            "\n8) Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ Ð½Ð¾Ð¼ÐµÑ€Ð° Ð² ÑÐ¾Ñ€Ñ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð½Ð¾Ð¼ Ð²Ð¸Ð´Ðµ" +
-                            "\n9) Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ Ð¿Ð¾ÑÐ»ÐµÐ´Ð½Ð¸Ñ… Ñ‚Ñ€ÐµÑ… Ð³Ð¾ÑÑ‚ÐµÐ¹ Ð½Ð¾Ð¼ÐµÑ€Ð°" +
-                            "\n 10) Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ Ð´ÐµÑ‚Ð°Ð»Ð¸ Ð½Ð¾Ð¼ÐµÑ€Ð°");
+                    while (exitFromSectionBool) {
+                        System.out.println("\nÐàçäåë ãîñòåé" +
+                                "\n1) Óäàëèòü ãîñòÿ" +
+                                "\n2) Ïîëó÷èòü ïîëíóþ ñòîèìîñòü äëÿ ãîñòÿ" +
+                                "\n3) Îáùåå ÷èñëî ãîñòåé" +
+                                "\n4) Ñîðòèðîâêà ãîñòåé" +
+                                "\n5) Âûõîä");
+                        sectionSwitchChoice = scanner.nextInt();
+                        scanner.nextLine();
+                        switch (sectionSwitchChoice) {
+                            case 1 -> guestController.deleteGuest();
+                            case 2 -> guestController.getTotalPriceForGuest();
+                            case 3 -> guestController.totalNumberOfGuests();
+                            case 4 -> guestController.guestSort();
+                            case 5 -> exitFromSectionBool = false;
+                        }
+                    }
                     break;
                 case 3:
-                    System.out.println("Ð Ð°Ð·Ð´ÐµÐ» ÑƒÑÐ»ÑƒÐ³" +
-                            "\n1) Ð¡Ð¾Ð·Ð´Ð°Ñ‚ÑŒ Ð½Ð¾Ð¼ÐµÑ€" +
-                            "\n2) Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð³Ð¾ÑÑ‚Ñ Ð² Ð½Ð¾Ð¼ÐµÑ€" +
-                            "\n3) Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ Ð³Ð¾ÑÑ‚ÐµÐ¹ Ð¸Ð· Ð½Ð¾Ð¼ÐµÑ€Ð°" +
-                            "\n4) Ð˜Ð·Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ ÑÑ‚Ð°Ñ‚ÑƒÑ Ð½Ð¾Ð¼ÐµÑ€Ð°" +
-                            "\n5) Ð˜Ð·Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ Ñ†ÐµÐ½Ñƒ Ð½Ð¾Ð¼ÐµÑ€Ð°" +
-                            "\n6) Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ Ð¾Ð±Ñ‰ÐµÐµ ÐºÐ¾Ð»-Ð²Ð¾ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½Ñ‹Ñ… Ð½Ð¾Ð¼ÐµÑ€Ð¾Ð²" +
-                            "\n7) Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ Ð¾Ð±Ñ‰ÐµÐµ ÐºÐ¾Ð»-Ð²Ð¾ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½Ñ‹Ñ… Ð½Ð¾Ð¼ÐµÑ€Ð¾Ð² Ð¿Ð¾ÑÐ»Ðµ Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð½Ð¾Ð¹ Ð´Ð°Ñ‚Ñ‹" +
-                            "\n8) Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ Ð½Ð¾Ð¼ÐµÑ€Ð° Ð² ÑÐ¾Ñ€Ñ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð½Ð¾Ð¼ Ð²Ð¸Ð´Ðµ" +
-                            "\n9) Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ Ð¿Ð¾ÑÐ»ÐµÐ´Ð½Ð¸Ñ… Ñ‚Ñ€ÐµÑ… Ð³Ð¾ÑÑ‚ÐµÐ¹ Ð½Ð¾Ð¼ÐµÑ€Ð°" +
-                            "\n 10) Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ Ð´ÐµÑ‚Ð°Ð»Ð¸ Ð½Ð¾Ð¼ÐµÑ€Ð°");
+                    while (exitFromSectionBool) {
+                        System.out.println("\nÐàçäåë óñëóã" +
+                                "\n1) Äîáàâèòü óñëóãó" +
+                                "\n2) Ïîìåíÿòü öåíó óñëóãè" +
+                                "\n3) Äîáàâèòü ãîñòþ óñëóãó" +
+                                "\n4) Ñîðòèðîâêà óñëóã" +
+                                "\n5) Ñîðòèðîâêà óñëóã ãîñòÿ" +
+                                "\n6) Âûõîä");
+                        sectionSwitchChoice = scanner.nextInt();
+                        scanner.nextLine();
+                        switch (sectionSwitchChoice) {
+                            case 1 -> maintenanceController.createMaintenance();
+                            case 2 -> maintenanceController.changePriceToMaintenance();
+                            case 3 -> maintenanceController.addMaintenanceToGuest();
+                            case 4 -> maintenanceController.maintenanceSort();
+                            case 5 -> maintenanceController.maintenancesForGuestSort();
+                            case 6 -> exitFromSectionBool = false;
+                        }
+                    }
                     break;
                 case 4:
                     exitBool = false;
