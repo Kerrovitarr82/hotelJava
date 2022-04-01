@@ -16,10 +16,11 @@ import com.senla.hoteladmin.service.impl.MaintenanceServiceImpl;
 import com.senla.hoteladmin.service.impl.RoomServiceImpl;
 import com.senla.hoteladmin.util.IdCreatorForEntities;
 
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         IdCreatorForEntities idCreatorForEntities = new IdCreatorForEntities();
         RoomDao roomDao = new RoomDaoImpl();
         GuestDao guestDao = new GuestDaoImpl();
@@ -57,25 +58,21 @@ public class Main {
                                 "\n7) Вывести общее кол-во свободных номеров после определенной даты" +
                                 "\n8) Вывести номера в сортированном виде" +
                                 "\n9) Вывести последних трех гостей номера" +
-                                "\n 10) Вывести детали номера");
+                                "\n10) Вывести детали номера" +
+                                "\n11) Выход");
                         sectionSwitchChoice = scanner.nextInt();
                         switch (sectionSwitchChoice) {
-                            case 1:
-                                roomController.createRoom();
-                                break;
-                            case 2:
-                                roomController.addToRoom();
-                                break;
-                            case 3:
-                                roomController.deleteFromRoom();
-                                break;
-                            case 4:
-                                roomController.changeStatus();
-                                break;
-                            case 5:
-                                roomController.changePriceToRoom();
-                                break;
-
+                            case 1 -> roomController.createRoom();
+                            case 2 -> roomController.addToRoom();
+                            case 3 -> roomController.deleteFromRoom();
+                            case 4 -> roomController.changeStatus();
+                            case 5 -> roomController.changePriceToRoom();
+                            case 6 -> roomController.totalNumberOfFreeRooms();
+                            case 7 -> roomController.listOfFreeRoomsByDate();
+                            case 8 -> roomController.roomSort();
+                            case 9 -> roomController.getLastThreeGuest();
+                            case 10 -> roomController.roomDetails();
+                            case 11 -> exitFromSectionBool = false;
                         }
                     }
                     break;
@@ -106,7 +103,7 @@ public class Main {
                             "\n 10) Вывести детали номера");
                     break;
                 case 4:
-                    exitFromSectionBool = false;
+                    exitBool = false;
                     break;
             }
 

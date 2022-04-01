@@ -1,0 +1,10 @@
+package com.senla.hoteladmin.controller;
+
+import java.text.ParseException;
+
+public interface MaintenanceController {
+    void changePriceToMaintenance();
+    void addMaintenanceToGuest() throws ParseException;
+    void maintenanceSort();
+    void maintenancesForGuestSort();
+}

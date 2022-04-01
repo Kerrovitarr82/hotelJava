@@ -33,7 +33,9 @@ public class RoomControllerImpl implements RoomController {
         Room room = new Room();
         room.setId(idCreator.createId(IdCreatorEnum.ROOM));
         System.out.print("Введите номер комнаты: ");
-        room.setNumber(scanner.nextInt());
+        int roomNum = scanner.nextInt();
+        scanner.nextLine();
+        room.setNumber(roomNum);
         System.out.println("Выберите статус номера");
         System.out.println("1) Идет ремонт\n2) Занят гостем\n3) Свободный");
         switch (scanner.nextInt()) {
@@ -42,11 +44,17 @@ public class RoomControllerImpl implements RoomController {
             case 3 -> room.setStatus(StatusEnum.FREE);
         }
         System.out.print("Введите цену номера: ");
-        room.setPrice(scanner.nextInt());
+        int price = scanner.nextInt();
+        scanner.nextLine();
+        room.setPrice(price);
         System.out.print("Введите максимальное количество гостей в номере: ");
-        room.setMaxGuests(scanner.nextInt());
+        int max = scanner.nextInt();
+        scanner.nextLine();
+        room.setMaxGuests(max);
         System.out.print("Введите количество звезд у номера: ");
-        room.setStars(scanner.nextInt());
+        int stars = scanner.nextInt();
+        scanner.nextLine();
+        room.setStars(stars);
         roomService.create(room);
         System.out.println("Комната создана!");
     }
@@ -56,13 +64,16 @@ public class RoomControllerImpl implements RoomController {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите id номера, в который надо добавить гостя: ");
         int id = scanner.nextInt();
+        scanner.nextLine();
         System.out.println("Введите данные гостя");
         Guest guest = new Guest();
         guest.setId(idCreator.createId(IdCreatorEnum.GUEST));
         System.out.print("Введите имя: ");
-        guest.setName(scanner.nextLine());
+        String str = scanner.nextLine();
+        guest.setName(str);
         System.out.print("Введите количество дней проживания: ");
-        guest.setFirstAndLastDay(scanner.nextInt());
+        int days = scanner.nextInt();
+        guest.setFirstAndLastDay(days);
         roomService.addToRoom(id, guest);
     }
 
@@ -70,7 +81,9 @@ public class RoomControllerImpl implements RoomController {
     public void deleteFromRoom() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите id номера, из которого надо выселить гостей: ");
-        roomService.deleteFromRoom(scanner.nextInt());
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        roomService.deleteFromRoom(id);
     }
 
     @Override
@@ -78,9 +91,12 @@ public class RoomControllerImpl implements RoomController {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите id номера, у которого меняем статус: ");
         int id = scanner.nextInt();
+        scanner.nextLine();
         System.out.println("Выберите статус номера");
         System.out.println("1) Идет ремонт\n2) Занят гостем\n3) Свободный");
-        switch (scanner.nextInt()) {
+        int switchChoice = scanner.nextInt();
+        scanner.nextLine();
+        switch (switchChoice) {
             case 1 -> roomService.changeStatus(id, StatusEnum.UNDER_REPAIR);
             case 2 -> roomService.changeStatus(id, StatusEnum.SERVICED);
             case 3 -> roomService.changeStatus(id, StatusEnum.FREE);
@@ -92,8 +108,11 @@ public class RoomControllerImpl implements RoomController {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите id номера, у которого меняем цену: ");
         int id = scanner.nextInt();
+        scanner.nextLine();
         System.out.print("Введите новую цену: ");
-        roomService.changePriceToRoom(id, scanner.nextInt());
+        int price = scanner.nextInt();
+        scanner.nextLine();
+        roomService.changePriceToRoom(id, price);
     }
 
     @Override
@@ -107,7 +126,8 @@ public class RoomControllerImpl implements RoomController {
         System.out.print("Введите дату в формате дд.мм.гггг: ");
         Calendar calendar = new GregorianCalendar();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        calendar.setTime(sdf.parse(scanner.nextLine()));
+        String str = scanner.nextLine();
+        calendar.setTime(sdf.parse(str));
         System.out.println("Лист номеров, свободных после заданой даты: ");
         System.out.println(roomService.listOfFreeRoomsByDate(calendar));
     }
@@ -117,9 +137,19 @@ public class RoomControllerImpl implements RoomController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Выберите что именно вы хотите отсортировать");
         System.out.println("1) Все комнаты\n2) Свободные комнаты");
-        switch (scanner.nextInt()) {
-            case 1 -> System.out.println(roomService.roomSort(SortAndTotalChoice.ALL_ROOMS));
-            case 2 -> System.out.println(roomService.roomSort(SortAndTotalChoice.FREE_ROOMS));
+        int switchChoice = scanner.nextInt();
+        scanner.nextLine();
+        switch (switchChoice) {
+            case 1 -> {
+                for (Room room : roomService.roomSort(SortAndTotalChoice.ALL_ROOMS)) {
+                    System.out.println(room);
+                }
+            }
+            case 2 -> {
+                for (Room room : roomService.roomSort(SortAndTotalChoice.FREE_ROOMS)) {
+                    System.out.println(room);
+                }
+            }
         }
     }
 
@@ -127,13 +157,17 @@ public class RoomControllerImpl implements RoomController {
     public void getLastThreeGuest() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите id номера: ");
-        System.out.println(roomService.getLastThreeGuest(scanner.nextInt()));
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println(roomService.getLastThreeGuest(id));
     }
 
     @Override
     public void roomDetails() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите id номера: ");
-        System.out.println(roomService.roomDetails(scanner.nextInt()));
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println(roomService.roomDetails(id));
     }
 }
