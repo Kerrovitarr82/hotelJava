@@ -1,7 +1,10 @@
 package com.senla.hoteladmin.dao.entity;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 public class Guest extends AbstractEntity{
     private String name;

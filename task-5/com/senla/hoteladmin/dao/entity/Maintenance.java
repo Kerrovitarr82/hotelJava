@@ -8,6 +8,8 @@ public class Maintenance extends AbstractEntity{
     private int price;
     private Calendar date;
 
+    public Maintenance(){}
+
     public Maintenance(String name, int price, int id, Calendar date) {
         this.name = name;
         this.price = price;
@@ -38,14 +40,14 @@ public class Maintenance extends AbstractEntity{
     @Override
     public String toString() {
         if (date == null) {
-            return "Service{" +
+            return "Maintenance{" +
                     "name='" + name + '\'' +
                     ", price=" + price +
                     ", id=" + getId() +
                     '}';
         } else {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E dd.MM.yyyy hh:mm");
-            return "Service{" +
+            return "Maintenance{" +
                     "name='" + name + '\'' +
                     ", price=" + price +
                     ", id=" + getId() +

@@ -1,10 +1,10 @@
 package com.senla.hoteladmin.controller.impl;
 
 import com.senla.hoteladmin.controller.GuestController;
-import com.senla.hoteladmin.dao.entity.Guest;
 import com.senla.hoteladmin.service.GuestService;
 import com.senla.hoteladmin.service.RoomService;
 import com.senla.hoteladmin.util.IdCreatorForEntities;
+import com.senla.hoteladmin.util.UtilityFunctions;
 
 import java.util.Scanner;
 
@@ -22,33 +22,31 @@ public class GuestControllerImpl implements GuestController {
     @Override
     public void deleteGuest() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Р’РІРµРґРёС‚Рµ id РЅРѕРјРµСЂР°, РіРѕСЃС‚РµР№ РєРѕС‚РѕСЂРѕР№ РЅР°РґРѕ СѓРґР°Р»РёС‚СЊ: ");
+        System.out.print("Введите id номера, гостей которой надо удалить: ");
         int id = scanner.nextInt();
         scanner.nextLine();
         guestService.deleteGuest(id);
-        System.out.println("Р“РѕСЃС‚СЊ/Рё СѓРґР°Р»РµРЅ/С‹");
+        System.out.println("Гость/и удален/ы");
     }
 
     @Override
     public void getTotalPriceForGuest() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Р’РІРµРґРёС‚Рµ id РіРѕСЃС‚СЏ: ");
+        System.out.print("Введите id гостя: ");
         int id = scanner.nextInt();
         scanner.nextLine();
         int total = guestService.getTotalPriceForGuest(id);
-        System.out.println("РџРѕР»РЅР°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ РїСЂРѕР¶РёРІР°РЅРёСЏ РґР»СЏ РіРѕСЃС‚СЏ: " + total);
+        System.out.println("Полная стоимость проживания для гостя: " + total);
     }
 
     @Override
     public void totalNumberOfGuests() {
         int total = guestService.totalNumberOfGuests();
-        System.out.println("РћР±С‰РµРµ РєРѕР»-РІРѕ РіРѕСЃС‚РµР№: " + total);
+        System.out.println("Общее кол-во гостей: " + total);
     }
 
     @Override
     public void guestSort() {
-        for (Guest guest : guestService.guestSort()) {
-            System.out.println(guest);
-        }
+        new UtilityFunctions().printFunc(guestService.guestSort());
     }
 }

@@ -1,8 +1,8 @@
 package com.senla.hoteladmin.service;
 
-import com.senla.hoteladmin.util.SortAndTotalChoice;
 import com.senla.hoteladmin.dao.entity.Guest;
 import com.senla.hoteladmin.dao.entity.Room;
+import com.senla.hoteladmin.util.SortAndTotalChoice;
 import com.senla.hoteladmin.util.StatusEnum;
 
 import java.util.Calendar;

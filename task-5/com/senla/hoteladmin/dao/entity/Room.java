@@ -79,9 +79,9 @@ public class Room extends AbstractEntity {
         String threeGuests = "";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E dd.MM.yyyy");
         for (Guest guest : lastThreeGuest) {
-            threeGuests += "РРјСЏ: " + guest.getName() +
-                    ". Р”Р°С‚Р° Р·Р°РµР·РґР°: " + simpleDateFormat.format(guest.getFirstDay().getTime()) +
-                    ". Р”Р°С‚Р° РІС‹РµР·РґР°: " + simpleDateFormat.format(guest.getLastDay().getTime()) + "\n";
+            threeGuests += "Имя: " + guest.getName() +
+                    ". Дата заезда: " + simpleDateFormat.format(guest.getFirstDay().getTime()) +
+                    ". Дата выезда: " + simpleDateFormat.format(guest.getLastDay().getTime()) + "\n";
         }
         return threeGuests.substring(0, threeGuests.length() - 1);
     }

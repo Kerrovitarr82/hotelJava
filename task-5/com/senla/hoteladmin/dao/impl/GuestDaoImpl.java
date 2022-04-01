@@ -2,6 +2,7 @@ package com.senla.hoteladmin.dao.impl;
 
 import com.senla.hoteladmin.dao.GuestDao;
 import com.senla.hoteladmin.dao.entity.Guest;
+
 import java.util.Date;
 
 public class GuestDaoImpl extends AbstractDaoImpl<Guest> implements GuestDao {

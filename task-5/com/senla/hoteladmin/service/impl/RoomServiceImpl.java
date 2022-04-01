@@ -3,11 +3,10 @@ package com.senla.hoteladmin.service.impl;
 import com.senla.hoteladmin.dao.GuestDao;
 import com.senla.hoteladmin.dao.MaintenanceDao;
 import com.senla.hoteladmin.dao.RoomDao;
-
-import com.senla.hoteladmin.util.*;
 import com.senla.hoteladmin.dao.entity.Guest;
 import com.senla.hoteladmin.dao.entity.Room;
 import com.senla.hoteladmin.service.RoomService;
+import com.senla.hoteladmin.util.*;
 
 import java.util.*;
 

@@ -5,10 +5,7 @@ import com.senla.hoteladmin.dao.entity.Guest;
 import com.senla.hoteladmin.dao.entity.Room;
 import com.senla.hoteladmin.service.GuestService;
 import com.senla.hoteladmin.service.RoomService;
-import com.senla.hoteladmin.util.IdCreatorEnum;
-import com.senla.hoteladmin.util.IdCreatorForEntities;
-import com.senla.hoteladmin.util.SortAndTotalChoice;
-import com.senla.hoteladmin.util.StatusEnum;
+import com.senla.hoteladmin.util.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,46 +29,46 @@ public class RoomControllerImpl implements RoomController {
         Scanner scanner = new Scanner(System.in);
         Room room = new Room();
         room.setId(idCreator.createId(IdCreatorEnum.ROOM));
-        System.out.print("Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ РєРѕРјРЅР°С‚С‹: ");
+        System.out.print("Введите номер комнаты: ");
         int roomNum = scanner.nextInt();
         scanner.nextLine();
         room.setNumber(roomNum);
-        System.out.println("Р’С‹Р±РµСЂРёС‚Рµ СЃС‚Р°С‚СѓСЃ РЅРѕРјРµСЂР°");
-        System.out.println("1) РРґРµС‚ СЂРµРјРѕРЅС‚\n2) Р—Р°РЅСЏС‚ РіРѕСЃС‚РµРј\n3) РЎРІРѕР±РѕРґРЅС‹Р№");
+        System.out.println("Выберите статус номера");
+        System.out.println("1) Идет ремонт\n2) Занят гостем\n3) Свободный");
         switch (scanner.nextInt()) {
             case 1 -> room.setStatus(StatusEnum.UNDER_REPAIR);
             case 2 -> room.setStatus(StatusEnum.SERVICED);
             case 3 -> room.setStatus(StatusEnum.FREE);
         }
-        System.out.print("Р’РІРµРґРёС‚Рµ С†РµРЅСѓ РЅРѕРјРµСЂР°: ");
+        System.out.print("Введите цену номера: ");
         int price = scanner.nextInt();
         scanner.nextLine();
         room.setPrice(price);
-        System.out.print("Р’РІРµРґРёС‚Рµ РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РіРѕСЃС‚РµР№ РІ РЅРѕРјРµСЂРµ: ");
+        System.out.print("Введите максимальное количество гостей в номере: ");
         int max = scanner.nextInt();
         scanner.nextLine();
         room.setMaxGuests(max);
-        System.out.print("Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р·РІРµР·Рґ Сѓ РЅРѕРјРµСЂР°: ");
+        System.out.print("Введите количество звезд у номера: ");
         int stars = scanner.nextInt();
         scanner.nextLine();
         room.setStars(stars);
         roomService.create(room);
-        System.out.println("РљРѕРјРЅР°С‚Р° СЃРѕР·РґР°РЅР°!");
+        System.out.println("Комната создана!");
     }
 
     @Override
     public void addToRoom() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Р’РІРµРґРёС‚Рµ id РЅРѕРјРµСЂР°, РІ РєРѕС‚РѕСЂС‹Р№ РЅР°РґРѕ РґРѕР±Р°РІРёС‚СЊ РіРѕСЃС‚СЏ: ");
+        System.out.print("Введите id номера, в который надо добавить гостя: ");
         int id = scanner.nextInt();
         scanner.nextLine();
-        System.out.println("Р’РІРµРґРёС‚Рµ РґР°РЅРЅС‹Рµ РіРѕСЃС‚СЏ");
+        System.out.println("Введите данные гостя");
         Guest guest = new Guest();
         guest.setId(idCreator.createId(IdCreatorEnum.GUEST));
-        System.out.print("Р’РІРµРґРёС‚Рµ РёРјСЏ: ");
+        System.out.print("Введите имя: ");
         String str = scanner.nextLine();
         guest.setName(str);
-        System.out.print("Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ РґРЅРµР№ РїСЂРѕР¶РёРІР°РЅРёСЏ: ");
+        System.out.print("Введите количество дней проживания: ");
         int days = scanner.nextInt();
         guest.setFirstAndLastDay(days);
         roomService.addToRoom(id, guest);
@@ -80,7 +77,7 @@ public class RoomControllerImpl implements RoomController {
     @Override
     public void deleteFromRoom() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Р’РІРµРґРёС‚Рµ id РЅРѕРјРµСЂР°, РёР· РєРѕС‚РѕСЂРѕРіРѕ РЅР°РґРѕ РІС‹СЃРµР»РёС‚СЊ РіРѕСЃС‚РµР№: ");
+        System.out.print("Введите id номера, из которого надо выселить гостей: ");
         int id = scanner.nextInt();
         scanner.nextLine();
         roomService.deleteFromRoom(id);
@@ -89,11 +86,11 @@ public class RoomControllerImpl implements RoomController {
     @Override
     public void changeStatus() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Р’РІРµРґРёС‚Рµ id РЅРѕРјРµСЂР°, Сѓ РєРѕС‚РѕСЂРѕРіРѕ РјРµРЅСЏРµРј СЃС‚Р°С‚СѓСЃ: ");
+        System.out.print("Введите id номера, у которого меняем статус: ");
         int id = scanner.nextInt();
         scanner.nextLine();
-        System.out.println("Р’С‹Р±РµСЂРёС‚Рµ СЃС‚Р°С‚СѓСЃ РЅРѕРјРµСЂР°");
-        System.out.println("1) РРґРµС‚ СЂРµРјРѕРЅС‚\n2) Р—Р°РЅСЏС‚ РіРѕСЃС‚РµРј\n3) РЎРІРѕР±РѕРґРЅС‹Р№");
+        System.out.println("Выберите статус номера");
+        System.out.println("1) Идет ремонт\n2) Занят гостем\n3) Свободный");
         int switchChoice = scanner.nextInt();
         scanner.nextLine();
         switch (switchChoice) {
@@ -106,10 +103,10 @@ public class RoomControllerImpl implements RoomController {
     @Override
     public void changePriceToRoom() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Р’РІРµРґРёС‚Рµ id РЅРѕРјРµСЂР°, Сѓ РєРѕС‚РѕСЂРѕРіРѕ РјРµРЅСЏРµРј С†РµРЅСѓ: ");
+        System.out.print("Введите id номера, у которого меняем цену: ");
         int id = scanner.nextInt();
         scanner.nextLine();
-        System.out.print("Р’РІРµРґРёС‚Рµ РЅРѕРІСѓСЋ С†РµРЅСѓ: ");
+        System.out.print("Введите новую цену: ");
         int price = scanner.nextInt();
         scanner.nextLine();
         roomService.changePriceToRoom(id, price);
@@ -117,38 +114,34 @@ public class RoomControllerImpl implements RoomController {
 
     @Override
     public void totalNumberOfFreeRooms() {
-        System.out.print("РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃРІРѕР±РѕРґРЅС‹С… РЅРѕРјРµСЂРѕРІ: " + roomService.totalNumberOfFreeRooms());
+        System.out.print("Общее количество свободных номеров: " + roomService.totalNumberOfFreeRooms());
     }
 
     @Override
     public void listOfFreeRoomsByDate() throws ParseException {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Р’РІРµРґРёС‚Рµ РґР°С‚Сѓ РІ С„РѕСЂРјР°С‚Рµ РґРґ.РјРј.РіРіРіРі: ");
+        System.out.print("Введите дату в формате дд.мм.гггг: ");
         Calendar calendar = new GregorianCalendar();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         String str = scanner.nextLine();
         calendar.setTime(sdf.parse(str));
-        System.out.println("Р›РёСЃС‚ РЅРѕРјРµСЂРѕРІ, СЃРІРѕР±РѕРґРЅС‹С… РїРѕСЃР»Рµ Р·Р°РґР°РЅРѕР№ РґР°С‚С‹: ");
-        System.out.println(roomService.listOfFreeRoomsByDate(calendar));
+        System.out.println("Лист номеров, свободных после заданой даты: ");
+        new UtilityFunctions().printFunc(roomService.listOfFreeRoomsByDate(calendar));
     }
 
     @Override
     public void roomSort() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Р’С‹Р±РµСЂРёС‚Рµ С‡С‚Рѕ РёРјРµРЅРЅРѕ РІС‹ С…РѕС‚РёС‚Рµ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°С‚СЊ");
-        System.out.println("1) Р’СЃРµ РєРѕРјРЅР°С‚С‹\n2) РЎРІРѕР±РѕРґРЅС‹Рµ РєРѕРјРЅР°С‚С‹");
+        System.out.println("Выберите что именно вы хотите отсортировать");
+        System.out.println("1) Все комнаты\n2) Свободные комнаты");
         int switchChoice = scanner.nextInt();
         scanner.nextLine();
         switch (switchChoice) {
             case 1 -> {
-                for (Room room : roomService.roomSort(SortAndTotalChoice.ALL_ROOMS)) {
-                    System.out.println(room);
-                }
+                new UtilityFunctions().printFunc(roomService.roomSort(SortAndTotalChoice.ALL_ROOMS));
             }
             case 2 -> {
-                for (Room room : roomService.roomSort(SortAndTotalChoice.FREE_ROOMS)) {
-                    System.out.println(room);
-                }
+                new UtilityFunctions().printFunc(roomService.roomSort(SortAndTotalChoice.FREE_ROOMS));
             }
         }
     }
@@ -156,7 +149,7 @@ public class RoomControllerImpl implements RoomController {
     @Override
     public void getLastThreeGuest() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Р’РІРµРґРёС‚Рµ id РЅРѕРјРµСЂР°: ");
+        System.out.print("Введите id номера: ");
         int id = scanner.nextInt();
         scanner.nextLine();
         System.out.println(roomService.getLastThreeGuest(id));
@@ -165,7 +158,7 @@ public class RoomControllerImpl implements RoomController {
     @Override
     public void roomDetails() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Р’РІРµРґРёС‚Рµ id РЅРѕРјРµСЂР°: ");
+        System.out.print("Введите id номера: ");
         int id = scanner.nextInt();
         scanner.nextLine();
         System.out.println(roomService.roomDetails(id));
