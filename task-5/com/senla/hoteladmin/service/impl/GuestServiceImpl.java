@@ -8,7 +8,7 @@ import com.senla.hoteladmin.dao.entity.Room;
 import com.senla.hoteladmin.service.GuestService;
 import com.senla.hoteladmin.util.GuestAlphabetComparator;
 import com.senla.hoteladmin.util.GuestDateComparator;
-import com.senla.hoteladmin.util.StatusEnum;
+import com.senla.hoteladmin.util.RoomStatusEnum;
 
 import java.util.Comparator;
 import java.util.Set;
@@ -27,18 +27,18 @@ public class GuestServiceImpl extends AbstractServiceImpl<Guest, GuestDao> imple
     }
 
     @Override
-    public void deleteGuest(int roomId) {
+    public void deleteGuest(Long roomId) {
         Room room = roomDao.getById(roomId);
-        for (Guest guest : room.getGuests()){
+        for (Guest guest : room.getGuests()) {
             guest.setRoom(null);
             guestDao.deleteById(guest.getId());
         }
         room.setGuests(null);
-        room.setStatus(StatusEnum.FREE);
+        room.setStatus(RoomStatusEnum.FREE);
     }
 
     @Override
-    public int getTotalPriceForGuest(int guestId) {
+    public int getTotalPriceForGuest(Long guestId) {
         return guestDao.getTotalPrice(guestId);
     }
 
@@ -48,7 +48,7 @@ public class GuestServiceImpl extends AbstractServiceImpl<Guest, GuestDao> imple
     }
 
     @Override
-    public Set<Guest> guestSort() {
+    public Set<Guest> getGuestSortedByNameByEvicDate() {
         Comparator<Guest> guestComparator = new GuestAlphabetComparator().thenComparing(new GuestDateComparator());
         Set<Guest> guestTreeSet = new TreeSet<>(guestComparator);
         guestTreeSet.addAll(guestDao.getAll());

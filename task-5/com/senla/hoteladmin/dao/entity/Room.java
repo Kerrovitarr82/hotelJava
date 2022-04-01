@@ -1,6 +1,6 @@
 package com.senla.hoteladmin.dao.entity;
 
-import com.senla.hoteladmin.util.StatusEnum;
+import com.senla.hoteladmin.util.RoomStatusEnum;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,18 +10,18 @@ import java.util.Queue;
 
 public class Room extends AbstractEntity {
     private int number;
-    private StatusEnum status;
+    private RoomStatusEnum status;
     private int price;
     private int maxGuests;
     private int stars;
     private List<Guest> guests = new ArrayList<>();
     private Queue<Guest> lastThreeGuest = new LinkedList<>();
 
-    public StatusEnum getStatus() {
+    public RoomStatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(StatusEnum status) {
+    public void setStatus(RoomStatusEnum status) {
         this.status = status;
     }
 
@@ -90,7 +90,8 @@ public class Room extends AbstractEntity {
     public String toString() {
         if (guests.size() != 0) {
             return "Room{" +
-                    "number=" + number +
+                    "id=" + getId() +
+                    ", number=" + number +
                     ", status=" + status +
                     ", price=" + price +
                     ", maxGuests=" + maxGuests +
@@ -99,13 +100,13 @@ public class Room extends AbstractEntity {
                     '}';
         } else {
             return "Room{" +
-                    "number=" + number +
+                    "id=" + getId() +
+                    ", number=" + number +
                     ", status=" + status +
                     ", price=" + price +
                     ", maxGuests=" + maxGuests +
                     ", stars=" + stars +
                     '}';
         }
-
     }
 }

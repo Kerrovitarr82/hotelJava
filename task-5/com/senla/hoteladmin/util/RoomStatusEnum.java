@@ -1,6 +1,6 @@
 package com.senla.hoteladmin.util;
 
-public enum StatusEnum {
+public enum RoomStatusEnum {
     UNDER_REPAIR,
     SERVICED,
     FREE

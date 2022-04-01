@@ -3,14 +3,15 @@ package com.senla.hoteladmin.dao.entity;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Maintenance extends AbstractEntity{
+public class Maintenance extends AbstractEntity {
     private String name;
     private int price;
     private Calendar date;
 
-    public Maintenance(){}
+    public Maintenance() {
+    }
 
-    public Maintenance(String name, int price, int id, Calendar date) {
+    public Maintenance(String name, int price, Long id, Calendar date) {
         this.name = name;
         this.price = price;
         setId(id);
@@ -41,14 +42,16 @@ public class Maintenance extends AbstractEntity{
     public String toString() {
         if (date == null) {
             return "Maintenance{" +
-                    "name='" + name + '\'' +
+                    "id=" + getId() +
+                    ", name='" + name + '\'' +
                     ", price=" + price +
                     ", id=" + getId() +
                     '}';
         } else {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E dd.MM.yyyy hh:mm");
             return "Maintenance{" +
-                    "name='" + name + '\'' +
+                    "id=" + getId() +
+                    ", name='" + name + '\'' +
                     ", price=" + price +
                     ", id=" + getId() +
                     ", date=" + simpleDateFormat.format(date.getTime()) +

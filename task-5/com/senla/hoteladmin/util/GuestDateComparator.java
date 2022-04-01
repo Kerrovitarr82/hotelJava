@@ -7,9 +7,9 @@ import java.util.Comparator;
 public class GuestDateComparator implements Comparator<Guest> {
     @Override
     public int compare(Guest o1, Guest o2) {
-        if (o1.getLastDay().getTimeInMillis() >= o2.getLastDay().getTimeInMillis()) {
+        if (o1.getLastDay().compareTo(o2.getLastDay()) == 1) {
             return 1;
-        } else if (o1.getLastDay().getTimeInMillis() < o2.getLastDay().getTimeInMillis()) {
+        } else if (o1.getLastDay().compareTo(o2.getLastDay()) == -1) {
             return -1;
         } else {
             return 0;

@@ -4,7 +4,8 @@ import com.senla.hoteladmin.dao.RoomDao;
 import com.senla.hoteladmin.dao.entity.Room;
 
 public class RoomDaoImpl extends AbstractDaoImpl<Room> implements RoomDao {
-    public void update(int id, Room entity) {
+    @Override
+    public void update(Long id, Room entity) {
         Room room = getById(id);
         room.setPrice(entity.getPrice());
         room.setStars(entity.getStars());

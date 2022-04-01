@@ -1,11 +1,11 @@
 package com.senla.hoteladmin.util;
 
 public class IdCreatorForEntities {
-    private int numberOfRoomId = 0;
-    private int numberOfGuestId = 0;
-    private int numberOfMaintenanceId = 0;
-    
-    public int createId(IdCreatorEnum idCreatorEnum) {
+    private Long numberOfRoomId = 0L;
+    private Long numberOfGuestId = 0L;
+    private Long numberOfMaintenanceId = 0L;
+
+    public Long createId(IdCreatorEnum idCreatorEnum) {
         switch (idCreatorEnum) {
             case ROOM -> {
                 numberOfRoomId++;
@@ -20,6 +20,6 @@ public class IdCreatorForEntities {
                 return numberOfMaintenanceId;
             }
         }
-        return -1;
+        return -1L;
     }
 }

@@ -27,20 +27,20 @@ public class MaintenanceServiceImpl extends AbstractServiceImpl<Maintenance, Mai
     }
 
     @Override
-    public void changePriceToMaintenance(int maintenanceId, int newPrice) {
+    public void changePriceToMaintenance(Long maintenanceId, int newPrice) {
         Maintenance maintenance = maintenanceDao.getById(maintenanceId);
         maintenance.setPrice(newPrice);
     }
 
     @Override
-    public void addMaintenanceToGuest(int maintenanceId, int guestId, Calendar date) {
+    public void addMaintenanceToGuest(Long maintenanceId, Long guestId, Calendar maintenanceDate) {
         Maintenance maintenance = maintenanceDao.getById(maintenanceId);
         Guest guest = guestDao.getById(guestId);
-        guest.addMaintenances(new Maintenance(maintenance.getName(), maintenance.getPrice(), maintenanceId, date));
+        guest.addMaintenances(new Maintenance(maintenance.getName(), maintenance.getPrice(), maintenanceId, maintenanceDate));
     }
 
     @Override
-    public Set<Maintenance> maintenanceSort() {
+    public Set<Maintenance> getMaintenanceSortedByPrice() {
         Comparator<Maintenance> maintenanceComparator = new MaintenancePriceComparator();
         Set<Maintenance> maintenanceTreeSet = new TreeSet<>(maintenanceComparator);
         maintenanceTreeSet.addAll(maintenanceDao.getAll());
@@ -48,7 +48,7 @@ public class MaintenanceServiceImpl extends AbstractServiceImpl<Maintenance, Mai
     }
 
     @Override
-    public Set<Maintenance> maintenancesForGuestSort(int guestId) {
+    public Set<Maintenance> getMaintenancesForGuestSortedByPriceThenByDate(Long guestId) {
         Comparator<Maintenance> maintenanceComparator = new MaintenancePriceComparator().thenComparing(new MaintenanceDateComparator());
         Set<Maintenance> maintenanceTreeSet = new TreeSet<>(maintenanceComparator);
         Guest guest = guestDao.getById(guestId);

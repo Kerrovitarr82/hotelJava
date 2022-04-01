@@ -3,22 +3,15 @@ package com.senla.hoteladmin.dao.entity;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
-public class Guest extends AbstractEntity{
+public class Guest extends AbstractEntity {
     private String name;
     private Room room;
-    private int totalPrice = 0;
+    private int totalPrice;
     private Calendar firstDay;
     private Calendar lastDay;
     private List<Maintenance> maintenances = new ArrayList<>();
-
-    public void setFirstAndLastDay(int days) {
-        this.firstDay = new GregorianCalendar();
-        this.lastDay = new GregorianCalendar();
-        lastDay.add(Calendar.DAY_OF_YEAR, days);
-    }
 
     public String getName() {
         return name;
@@ -64,11 +57,16 @@ public class Guest extends AbstractEntity{
         this.totalPrice = totalPrice;
     }
 
+    public void setFirstDay(Calendar firstDay) {
+        this.firstDay = firstDay;
+    }
+
     @Override
     public String toString() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E dd.MM.yyyy");
         return "Guest{" +
-                "name='" + name + '\'' +
+                "id=" + getId() +
+                ", name='" + name + '\'' +
                 ", room=" + room.getNumber() +
                 ", maintenances=" + maintenances +
                 ", firstDay=" + simpleDateFormat.format(firstDay.getTime()) +

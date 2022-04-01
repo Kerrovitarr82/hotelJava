@@ -6,9 +6,19 @@ import com.senla.hoteladmin.dao.RoomDao;
 import com.senla.hoteladmin.dao.entity.Guest;
 import com.senla.hoteladmin.dao.entity.Room;
 import com.senla.hoteladmin.service.RoomService;
-import com.senla.hoteladmin.util.*;
+import com.senla.hoteladmin.util.IdCreatorEnum;
+import com.senla.hoteladmin.util.RoomMaxGuestsComparator;
+import com.senla.hoteladmin.util.RoomPriceComparator;
+import com.senla.hoteladmin.util.RoomSortEnum;
+import com.senla.hoteladmin.util.RoomStarsComparator;
+import com.senla.hoteladmin.util.RoomStatusEnum;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implements RoomService {
     private RoomDao roomDao;
@@ -24,29 +34,30 @@ public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implemen
 
 
     @Override
-    public void addToRoom(int id, Guest guest) {
+    public void addToRoom(Long id, Guest guest, int days) {
         Room room = roomDao.getById(id);
         room.setGuests(guest);
-        room.setStatus(StatusEnum.SERVICED);
+        room.setStatus(RoomStatusEnum.SERVICED);
         guest.setRoom(room);
-        guestDao.create(guest);
+        guestDao.create(guest, IdCreatorEnum.GUEST);
+        guestDao.setFirstAndLastDay(guest.getId(), days);
     }
 
     @Override
-    public void deleteFromRoom(int id) {
+    public void deleteFromRoom(Long id) {
         Room room = roomDao.getById(id);
         room.setGuests(null);
-        room.setStatus(StatusEnum.FREE);
+        room.setStatus(RoomStatusEnum.FREE);
     }
 
     @Override
-    public void changeStatus(int id, StatusEnum status) {
+    public void changeStatus(Long id, RoomStatusEnum status) {
         Room room = roomDao.getById(id);
         room.setStatus(status);
     }
 
     @Override
-    public void changePriceToRoom(int id, int price) {
+    public void changePriceToRoom(Long id, int price) {
         Room room = roomDao.getById(id);
         room.setPrice(price);
     }
@@ -55,7 +66,7 @@ public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implemen
     public int totalNumberOfFreeRooms() {
         int total = 0;
         for (Room room : roomDao.getAll()) {
-            if (room.getStatus() == StatusEnum.FREE) {
+            if (room.getStatus() == RoomStatusEnum.FREE) {
                 total++;
             }
         }
@@ -76,8 +87,8 @@ public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implemen
     }
 
     @Override
-    public Set<Room> roomSort(SortAndTotalChoice sortAndTotalChoice) {
-        switch (sortAndTotalChoice) {
+    public Set<Room> getRoomSortedByPriceByMaxGuestsByStars(RoomSortEnum roomSortEnum) {
+        switch (roomSortEnum) {
             case ALL_ROOMS -> {
                 return allRoomsSort();
             }
@@ -99,7 +110,7 @@ public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implemen
         Comparator<Room> roomComparator = new RoomPriceComparator().thenComparing(new RoomMaxGuestsComparator()).thenComparing(new RoomStarsComparator());
         Set<Room> roomTreeSet = new TreeSet<>(roomComparator);
         for (Room room : roomDao.getAll()) {
-            if (room.getStatus() == StatusEnum.FREE) {
+            if (room.getStatus() == RoomStatusEnum.FREE) {
                 roomTreeSet.add(room);
             }
         }
@@ -107,13 +118,13 @@ public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implemen
     }
 
     @Override
-    public String getLastThreeGuest(int id) {
+    public String getLastThreeGuest(Long id) {
         Room room = roomDao.getById(id);
         return room.checkLastThreeGuest();
     }
 
     @Override
-    public String roomDetails(int id) {
+    public String roomDetails(Long id) {
         Room room = roomDao.getById(id);
         return room.toString();
     }

@@ -2,14 +2,17 @@ package com.senla.hoteladmin.dao.impl;
 
 import com.senla.hoteladmin.dao.AbstractDao;
 import com.senla.hoteladmin.dao.entity.AbstractEntity;
+import com.senla.hoteladmin.util.IdCreatorEnum;
+import com.senla.hoteladmin.util.IdCreatorForEntities;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractDaoImpl <T extends AbstractEntity> implements AbstractDao<T> {
+public abstract class AbstractDaoImpl<T extends AbstractEntity> implements AbstractDao<T> {
     private List<T> repository = new ArrayList<>();
+    private IdCreatorForEntities idCreatorForEntities = new IdCreatorForEntities();
 
-    public T getById(int id) {
+    public T getById(Long id) {
         for (T entity : repository) {
             if (entity.getId() == id) {
                 return entity;
@@ -22,12 +25,13 @@ public abstract class AbstractDaoImpl <T extends AbstractEntity> implements Abst
         return new ArrayList<>(repository);
     }
 
-    public void deleteById(int id) {
+    public void deleteById(Long id) {
         T maintenance = getById(id);
         repository.remove(maintenance);
     }
 
-    public void create(T entity) {
+    public void create(T entity, IdCreatorEnum idCreatorEnum) {
+        entity.setId(idCreatorForEntities.createId(idCreatorEnum));
         repository.add(entity);
     }
 }

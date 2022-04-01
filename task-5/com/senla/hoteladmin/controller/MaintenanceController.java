@@ -4,8 +4,12 @@ import java.text.ParseException;
 
 public interface MaintenanceController {
     void createMaintenance();
+
     void changePriceToMaintenance();
+
     void addMaintenanceToGuest() throws ParseException;
-    void maintenanceSort();
-    void maintenancesForGuestSort();
+
+    void getMaintenanceSortedByPrice();
+
+    void getMaintenancesForGuestSortedByPriceByDate();
 }

@@ -3,10 +3,11 @@ package com.senla.hoteladmin.service.impl;
 import com.senla.hoteladmin.dao.AbstractDao;
 import com.senla.hoteladmin.dao.entity.AbstractEntity;
 import com.senla.hoteladmin.service.AbstractService;
+import com.senla.hoteladmin.util.IdCreatorEnum;
 
 import java.util.List;
 
-public abstract class AbstractServiceImpl <T extends AbstractEntity, D extends AbstractDao<T>> implements AbstractService<T> {
+public abstract class AbstractServiceImpl<T extends AbstractEntity, D extends AbstractDao<T>> implements AbstractService<T> {
     private D defaultDao;
 
     public AbstractServiceImpl(D defaultDao) {
@@ -14,7 +15,7 @@ public abstract class AbstractServiceImpl <T extends AbstractEntity, D extends A
     }
 
     @Override
-    public T getById(int id) {
+    public T getById(Long id) {
         return defaultDao.getById(id);
     }
 
@@ -24,17 +25,17 @@ public abstract class AbstractServiceImpl <T extends AbstractEntity, D extends A
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Long id) {
         defaultDao.deleteById(id);
     }
 
     @Override
-    public void update(int id, T entity) {
+    public void update(Long id, T entity) {
         defaultDao.update(id, entity);
     }
 
     @Override
-    public void create(T entity) {
-        defaultDao.create(entity);
+    public void create(T entity, IdCreatorEnum idCreatorEnum) {
+        defaultDao.create(entity, idCreatorEnum);
     }
 }

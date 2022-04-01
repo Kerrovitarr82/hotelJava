@@ -5,7 +5,10 @@ import com.senla.hoteladmin.dao.entity.Guest;
 import com.senla.hoteladmin.dao.entity.Room;
 import com.senla.hoteladmin.service.GuestService;
 import com.senla.hoteladmin.service.RoomService;
-import com.senla.hoteladmin.util.*;
+import com.senla.hoteladmin.util.IdCreatorEnum;
+import com.senla.hoteladmin.util.RoomSortEnum;
+import com.senla.hoteladmin.util.RoomStatusEnum;
+import com.senla.hoteladmin.util.UtilityFunctions;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,19 +19,16 @@ import java.util.Scanner;
 public class RoomControllerImpl implements RoomController {
     private RoomService roomService;
     private GuestService guestService;
-    private IdCreatorForEntities idCreator;
 
-    public RoomControllerImpl(RoomService roomService, GuestService guestService, IdCreatorForEntities idCreator) {
+    public RoomControllerImpl(RoomService roomService, GuestService guestService) {
         this.roomService = roomService;
         this.guestService = guestService;
-        this.idCreator = idCreator;
     }
 
     @Override
     public void createRoom() {
         Scanner scanner = new Scanner(System.in);
         Room room = new Room();
-        room.setId(idCreator.createId(IdCreatorEnum.ROOM));
         System.out.print("Введите номер комнаты: ");
         int roomNum = scanner.nextInt();
         scanner.nextLine();
@@ -36,9 +36,9 @@ public class RoomControllerImpl implements RoomController {
         System.out.println("Выберите статус номера");
         System.out.println("1) Идет ремонт\n2) Занят гостем\n3) Свободный");
         switch (scanner.nextInt()) {
-            case 1 -> room.setStatus(StatusEnum.UNDER_REPAIR);
-            case 2 -> room.setStatus(StatusEnum.SERVICED);
-            case 3 -> room.setStatus(StatusEnum.FREE);
+            case 1 -> room.setStatus(RoomStatusEnum.UNDER_REPAIR);
+            case 2 -> room.setStatus(RoomStatusEnum.SERVICED);
+            case 3 -> room.setStatus(RoomStatusEnum.FREE);
         }
         System.out.print("Введите цену номера: ");
         int price = scanner.nextInt();
@@ -52,7 +52,7 @@ public class RoomControllerImpl implements RoomController {
         int stars = scanner.nextInt();
         scanner.nextLine();
         room.setStars(stars);
-        roomService.create(room);
+        roomService.create(room, IdCreatorEnum.ROOM);
         System.out.println("Комната создана!");
     }
 
@@ -60,25 +60,23 @@ public class RoomControllerImpl implements RoomController {
     public void addToRoom() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите id номера, в который надо добавить гостя: ");
-        int id = scanner.nextInt();
+        Long id = scanner.nextLong();
         scanner.nextLine();
         System.out.println("Введите данные гостя");
         Guest guest = new Guest();
-        guest.setId(idCreator.createId(IdCreatorEnum.GUEST));
         System.out.print("Введите имя: ");
         String str = scanner.nextLine();
         guest.setName(str);
         System.out.print("Введите количество дней проживания: ");
         int days = scanner.nextInt();
-        guest.setFirstAndLastDay(days);
-        roomService.addToRoom(id, guest);
+        roomService.addToRoom(id, guest, days);
     }
 
     @Override
     public void deleteFromRoom() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите id номера, из которого надо выселить гостей: ");
-        int id = scanner.nextInt();
+        Long id = scanner.nextLong();
         scanner.nextLine();
         roomService.deleteFromRoom(id);
     }
@@ -87,16 +85,16 @@ public class RoomControllerImpl implements RoomController {
     public void changeStatus() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите id номера, у которого меняем статус: ");
-        int id = scanner.nextInt();
+        Long id = scanner.nextLong();
         scanner.nextLine();
         System.out.println("Выберите статус номера");
         System.out.println("1) Идет ремонт\n2) Занят гостем\n3) Свободный");
         int switchChoice = scanner.nextInt();
         scanner.nextLine();
         switch (switchChoice) {
-            case 1 -> roomService.changeStatus(id, StatusEnum.UNDER_REPAIR);
-            case 2 -> roomService.changeStatus(id, StatusEnum.SERVICED);
-            case 3 -> roomService.changeStatus(id, StatusEnum.FREE);
+            case 1 -> roomService.changeStatus(id, RoomStatusEnum.UNDER_REPAIR);
+            case 2 -> roomService.changeStatus(id, RoomStatusEnum.SERVICED);
+            case 3 -> roomService.changeStatus(id, RoomStatusEnum.FREE);
         }
     }
 
@@ -104,7 +102,7 @@ public class RoomControllerImpl implements RoomController {
     public void changePriceToRoom() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите id номера, у которого меняем цену: ");
-        int id = scanner.nextInt();
+        Long id = scanner.nextLong();
         scanner.nextLine();
         System.out.print("Введите новую цену: ");
         int price = scanner.nextInt();
@@ -126,11 +124,11 @@ public class RoomControllerImpl implements RoomController {
         String str = scanner.nextLine();
         calendar.setTime(sdf.parse(str));
         System.out.println("Лист номеров, свободных после заданой даты: ");
-        new UtilityFunctions().printFunc(roomService.listOfFreeRoomsByDate(calendar));
+        UtilityFunctions.printFunc(roomService.listOfFreeRoomsByDate(calendar));
     }
 
     @Override
-    public void roomSort() {
+    public void getRoomSortedByPriceByMaxGuestsByStars() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Выберите что именно вы хотите отсортировать");
         System.out.println("1) Все комнаты\n2) Свободные комнаты");
@@ -138,10 +136,10 @@ public class RoomControllerImpl implements RoomController {
         scanner.nextLine();
         switch (switchChoice) {
             case 1 -> {
-                new UtilityFunctions().printFunc(roomService.roomSort(SortAndTotalChoice.ALL_ROOMS));
+                UtilityFunctions.printFunc(roomService.getRoomSortedByPriceByMaxGuestsByStars(RoomSortEnum.ALL_ROOMS));
             }
             case 2 -> {
-                new UtilityFunctions().printFunc(roomService.roomSort(SortAndTotalChoice.FREE_ROOMS));
+                UtilityFunctions.printFunc(roomService.getRoomSortedByPriceByMaxGuestsByStars(RoomSortEnum.FREE_ROOMS));
             }
         }
     }
@@ -150,7 +148,7 @@ public class RoomControllerImpl implements RoomController {
     public void getLastThreeGuest() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите id номера: ");
-        int id = scanner.nextInt();
+        Long id = scanner.nextLong();
         scanner.nextLine();
         System.out.println(roomService.getLastThreeGuest(id));
     }
@@ -159,7 +157,7 @@ public class RoomControllerImpl implements RoomController {
     public void roomDetails() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите id номера: ");
-        int id = scanner.nextInt();
+        Long id = scanner.nextLong();
         scanner.nextLine();
         System.out.println(roomService.roomDetails(id));
     }

@@ -6,8 +6,11 @@ import java.util.Calendar;
 import java.util.Set;
 
 public interface MaintenanceService extends AbstractService<Maintenance> {
-    void changePriceToMaintenance(int maintenanceId, int newPrice);
-    void addMaintenanceToGuest(int maintenanceId, int guestId, Calendar date);
-    Set<Maintenance> maintenanceSort();
-    Set<Maintenance> maintenancesForGuestSort(int guestId);
+    void changePriceToMaintenance(Long maintenanceId, int newPrice);
+
+    void addMaintenanceToGuest(Long maintenanceId, Long guestId, Calendar maintenanceDate);
+
+    Set<Maintenance> getMaintenanceSortedByPrice();
+
+    Set<Maintenance> getMaintenancesForGuestSortedByPriceThenByDate(Long guestId);
 }
