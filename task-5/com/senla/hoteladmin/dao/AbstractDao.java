@@ -15,4 +15,6 @@ public interface AbstractDao<T extends AbstractEntity> {
     void update(Long id, T entity);
 
     void create(T entity, IdCreatorEnum idCreatorEnum);
+
+    int getTotalNumberOf();
 }

@@ -34,4 +34,9 @@ public abstract class AbstractDaoImpl<T extends AbstractEntity> implements Abstr
         entity.setId(idCreatorForEntities.createId(idCreatorEnum));
         repository.add(entity);
     }
+
+    @Override
+    public int getTotalNumberOf() {
+        return repository.size();
+    }
 }

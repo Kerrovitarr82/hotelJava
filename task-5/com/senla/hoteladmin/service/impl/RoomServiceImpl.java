@@ -36,7 +36,7 @@ public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implemen
     @Override
     public void addToRoom(Long id, Guest guest, int days) {
         Room room = roomDao.getById(id);
-        room.setGuests(guest);
+        roomDao.setGuests(id, guest);
         room.setStatus(RoomStatusEnum.SERVICED);
         guest.setRoom(room);
         guestDao.create(guest, IdCreatorEnum.GUEST);
@@ -46,7 +46,7 @@ public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implemen
     @Override
     public void deleteFromRoom(Long id) {
         Room room = roomDao.getById(id);
-        room.setGuests(null);
+        roomDao.setGuests(id, null);
         room.setStatus(RoomStatusEnum.FREE);
     }
 
@@ -119,8 +119,7 @@ public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implemen
 
     @Override
     public String getLastThreeGuest(Long id) {
-        Room room = roomDao.getById(id);
-        return room.checkLastThreeGuest();
+        return roomDao.checkLastThreeGuest(id);
     }
 
     @Override

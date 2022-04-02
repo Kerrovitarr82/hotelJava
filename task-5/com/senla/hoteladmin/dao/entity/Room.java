@@ -61,29 +61,16 @@ public class Room extends AbstractEntity {
         return guests;
     }
 
-    public void setGuests(Guest guest) {
-        if (guest == null) {
-            this.guests.clear();
-        } else {
-            this.guests.add(guest);
-            if (this.lastThreeGuest.size() < 3) {
-                this.lastThreeGuest.add(guest);
-            } else {
-                this.lastThreeGuest.poll();
-                this.lastThreeGuest.add(guest);
-            }
-        }
+    public void setGuest(Guest guest) {
+        guests.add(guest);
     }
 
-    public String checkLastThreeGuest() {
-        String threeGuests = "";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E dd.MM.yyyy");
-        for (Guest guest : lastThreeGuest) {
-            threeGuests += "Имя: " + guest.getName() +
-                    ". Дата заезда: " + simpleDateFormat.format(guest.getFirstDay().getTime()) +
-                    ". Дата выезда: " + simpleDateFormat.format(guest.getLastDay().getTime()) + "\n";
-        }
-        return threeGuests.substring(0, threeGuests.length() - 1);
+    public Queue<Guest> getLastThreeGuest() {
+        return lastThreeGuest;
+    }
+
+    public void setLastThreeGuest(Guest guest) {
+        lastThreeGuest.add(guest);
     }
 
     @Override

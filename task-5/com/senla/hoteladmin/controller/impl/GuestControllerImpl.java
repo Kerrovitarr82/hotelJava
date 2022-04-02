@@ -3,13 +3,13 @@ package com.senla.hoteladmin.controller.impl;
 import com.senla.hoteladmin.controller.GuestController;
 import com.senla.hoteladmin.service.GuestService;
 import com.senla.hoteladmin.service.RoomService;
+import com.senla.hoteladmin.util.UtilReader;
 import com.senla.hoteladmin.util.UtilityFunctions;
-
-import java.util.Scanner;
 
 public class GuestControllerImpl implements GuestController {
     private RoomService roomService;
     private GuestService guestService;
+    private UtilReader utilReader = new UtilReader();
 
     public GuestControllerImpl(RoomService roomService, GuestService guestService) {
         this.roomService = roomService;
@@ -18,20 +18,16 @@ public class GuestControllerImpl implements GuestController {
 
     @Override
     public void deleteGuest() {
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Введите id номера, гостей которой надо удалить: ");
-        Long id = scanner.nextLong();
-        scanner.nextLine();
+        Long id = utilReader.readLong();
         guestService.deleteGuest(id);
         System.out.println("Гость/и удален/ы");
     }
 
     @Override
     public void getTotalPriceForGuest() {
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Введите id гостя: ");
-        Long id = scanner.nextLong();
-        scanner.nextLine();
+        Long id = utilReader.readLong();
         int total = guestService.getTotalPriceForGuest(id);
         System.out.println("Полная стоимость проживания для гостя: " + total);
     }

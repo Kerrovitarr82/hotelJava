@@ -33,7 +33,7 @@ public class GuestServiceImpl extends AbstractServiceImpl<Guest, GuestDao> imple
             guest.setRoom(null);
             guestDao.deleteById(guest.getId());
         }
-        room.setGuests(null);
+        roomDao.setGuests(roomId, null);
         room.setStatus(RoomStatusEnum.FREE);
     }
 
@@ -44,7 +44,7 @@ public class GuestServiceImpl extends AbstractServiceImpl<Guest, GuestDao> imple
 
     @Override
     public int totalNumberOfGuests() {
-        return guestDao.getAll().size();
+        return guestDao.getTotalNumberOf();
     }
 
     @Override
