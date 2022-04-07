@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.stream.Stream;
 
 public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implements RoomService {
     private RoomDao roomDao;
@@ -87,7 +86,7 @@ public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implemen
     }
 
     @Override
-    public Set<Room> getRoomSortedByPriceByMaxGuestsByStars(RoomSortEnum roomSortEnum) {
+    public Stream<Room> getRoomSortedByPriceByMaxGuestsByStars(RoomSortEnum roomSortEnum) {
         switch (roomSortEnum) {
             case ALL_ROOMS -> {
                 return allRoomsSort();
@@ -97,24 +96,6 @@ public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implemen
             }
         }
         return null;
-    }
-
-    private Set<Room> allRoomsSort() {
-        Comparator<Room> roomComparator = new RoomPriceComparator().thenComparing(new RoomMaxGuestsComparator()).thenComparing(new RoomStarsComparator());
-        Set<Room> roomTreeSet = new TreeSet<>(roomComparator);
-        roomTreeSet.addAll(roomDao.getAll());
-        return roomTreeSet;
-    }
-
-    private Set<Room> freeRoomsSort() {
-        Comparator<Room> roomComparator = new RoomPriceComparator().thenComparing(new RoomMaxGuestsComparator()).thenComparing(new RoomStarsComparator());
-        Set<Room> roomTreeSet = new TreeSet<>(roomComparator);
-        for (Room room : roomDao.getAll()) {
-            if (room.getStatus() == RoomStatusEnum.FREE) {
-                roomTreeSet.add(room);
-            }
-        }
-        return roomTreeSet;
     }
 
     @Override
@@ -127,4 +108,15 @@ public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implemen
         Room room = roomDao.getById(id);
         return room.toString();
     }
+
+    private Stream<Room> allRoomsSort() {
+        Comparator<Room> roomComparator = new RoomPriceComparator().thenComparing(new RoomMaxGuestsComparator()).thenComparing(new RoomStarsComparator());
+        return roomDao.getAll().stream().sorted(roomComparator);
+    }
+
+    private Stream<Room> freeRoomsSort() {
+        Comparator<Room> roomComparator = new RoomPriceComparator().thenComparing(new RoomMaxGuestsComparator()).thenComparing(new RoomStarsComparator());
+        return roomDao.getAll().stream().filter(room -> room.getStatus() == RoomStatusEnum.FREE).sorted(roomComparator);
+    }
+
 }

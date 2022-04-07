@@ -3,14 +3,14 @@ package com.senla.hoteladmin.service;
 import com.senla.hoteladmin.dao.entity.Maintenance;
 
 import java.util.Calendar;
-import java.util.Set;
+import java.util.stream.Stream;
 
 public interface MaintenanceService extends AbstractService<Maintenance> {
     void changePriceToMaintenance(Long maintenanceId, int newPrice);
 
     void addMaintenanceToGuest(Long maintenanceId, Long guestId, Calendar maintenanceDate);
 
-    Set<Maintenance> getMaintenanceSortedByPrice();
+    Stream<Maintenance> getMaintenanceSortedByPrice();
 
-    Set<Maintenance> getMaintenancesForGuestSortedByPriceThenByDate(Long guestId);
+    Stream<Maintenance> getMaintenancesForGuestSortedByPriceThenByDate(Long guestId);
 }

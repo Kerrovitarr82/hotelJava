@@ -18,7 +18,7 @@ public class RoomDaoImpl extends AbstractDaoImpl<Room> implements RoomDao {
     @Override
     public void setGuests(Long id, Guest guest) {
         Room room = getById(id);
-        if (guest == null){
+        if (guest == null) {
             room.getGuests().clear();
         } else {
             room.setGuest(guest);

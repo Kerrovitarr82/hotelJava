@@ -3,13 +3,12 @@ package com.senla.hoteladmin.controller.impl;
 import com.senla.hoteladmin.controller.GuestController;
 import com.senla.hoteladmin.service.GuestService;
 import com.senla.hoteladmin.service.RoomService;
-import com.senla.hoteladmin.util.UtilReader;
-import com.senla.hoteladmin.util.UtilityFunctions;
+import com.senla.hoteladmin.util.ReaderUtil;
 
 public class GuestControllerImpl implements GuestController {
     private RoomService roomService;
     private GuestService guestService;
-    private UtilReader utilReader = new UtilReader();
+
 
     public GuestControllerImpl(RoomService roomService, GuestService guestService) {
         this.roomService = roomService;
@@ -19,7 +18,7 @@ public class GuestControllerImpl implements GuestController {
     @Override
     public void deleteGuest() {
         System.out.print("Введите id номера, гостей которой надо удалить: ");
-        Long id = utilReader.readLong();
+        Long id = ReaderUtil.readLong();
         guestService.deleteGuest(id);
         System.out.println("Гость/и удален/ы");
     }
@@ -27,7 +26,7 @@ public class GuestControllerImpl implements GuestController {
     @Override
     public void getTotalPriceForGuest() {
         System.out.print("Введите id гостя: ");
-        Long id = utilReader.readLong();
+        Long id = ReaderUtil.readLong();
         int total = guestService.getTotalPriceForGuest(id);
         System.out.println("Полная стоимость проживания для гостя: " + total);
     }
@@ -40,6 +39,6 @@ public class GuestControllerImpl implements GuestController {
 
     @Override
     public void getGuestSortedByNameByEvicDate() {
-        UtilityFunctions.printFunc(guestService.getGuestSortedByNameByEvicDate());
+        guestService.getGuestSortedByNameByEvicDate().forEach(System.out::println);
     }
 }

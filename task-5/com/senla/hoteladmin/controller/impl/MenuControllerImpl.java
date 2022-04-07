@@ -4,7 +4,7 @@ import com.senla.hoteladmin.controller.GuestController;
 import com.senla.hoteladmin.controller.MaintenanceController;
 import com.senla.hoteladmin.controller.MenuController;
 import com.senla.hoteladmin.controller.RoomController;
-import com.senla.hoteladmin.util.UtilReader;
+import com.senla.hoteladmin.util.ReaderUtil;
 
 import java.text.ParseException;
 
@@ -12,7 +12,7 @@ public class MenuControllerImpl implements MenuController {
     private RoomController roomController;
     private GuestController guestController;
     private MaintenanceController maintenanceController;
-    private UtilReader utilReader = new UtilReader();
+    private ReaderUtil readerUtil = new ReaderUtil();
 
     public MenuControllerImpl(RoomController roomController, GuestController guestController, MaintenanceController maintenanceController) {
         this.roomController = roomController;
@@ -33,7 +33,7 @@ public class MenuControllerImpl implements MenuController {
                     "\n2) Раздел гостей" +
                     "\n3) Раздел услуг" +
                     "\n4) Выход");
-            mainSwitchChoice = utilReader.readInt();
+            mainSwitchChoice = readerUtil.readInt();
             exitFromSectionBool = true;
             switch (mainSwitchChoice) {
                 case 1:
@@ -50,7 +50,7 @@ public class MenuControllerImpl implements MenuController {
                                 "\n9) Вывести последних трех гостей номера" +
                                 "\n10) Вывести детали номера" +
                                 "\n11) Выход");
-                        sectionSwitchChoice = utilReader.readInt();
+                        sectionSwitchChoice = readerUtil.readInt();
                         switch (sectionSwitchChoice) {
                             case 1 -> roomController.createRoom();
                             case 2 -> roomController.addToRoom();
@@ -74,7 +74,7 @@ public class MenuControllerImpl implements MenuController {
                                 "\n3) Общее число гостей" +
                                 "\n4) Сортировка гостей" +
                                 "\n5) Выход");
-                        sectionSwitchChoice = utilReader.readInt();
+                        sectionSwitchChoice = readerUtil.readInt();
                         switch (sectionSwitchChoice) {
                             case 1 -> guestController.deleteGuest();
                             case 2 -> guestController.getTotalPriceForGuest();
@@ -93,7 +93,7 @@ public class MenuControllerImpl implements MenuController {
                                 "\n4) Сортировка услуг" +
                                 "\n5) Сортировка услуг гостя" +
                                 "\n6) Выход");
-                        sectionSwitchChoice = utilReader.readInt();
+                        sectionSwitchChoice = readerUtil.readInt();
                         switch (sectionSwitchChoice) {
                             case 1 -> maintenanceController.createMaintenance();
                             case 2 -> maintenanceController.changePriceToMaintenance();

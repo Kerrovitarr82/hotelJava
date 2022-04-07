@@ -2,7 +2,6 @@ package com.senla.hoteladmin.dao.entity;
 
 import com.senla.hoteladmin.util.RoomStatusEnum;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

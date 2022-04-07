@@ -6,19 +6,15 @@ import com.senla.hoteladmin.service.GuestService;
 import com.senla.hoteladmin.service.MaintenanceService;
 import com.senla.hoteladmin.service.RoomService;
 import com.senla.hoteladmin.util.IdCreatorEnum;
-import com.senla.hoteladmin.util.UtilReader;
-import com.senla.hoteladmin.util.UtilityFunctions;
+import com.senla.hoteladmin.util.ReaderUtil;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class MaintenanceControllerImpl implements MaintenanceController {
     private RoomService roomService;
     private GuestService guestService;
     private MaintenanceService maintenanceService;
-    private UtilReader utilReader = new UtilReader();
 
     public MaintenanceControllerImpl(RoomService roomService, GuestService guestService, MaintenanceService maintenanceService) {
         this.roomService = roomService;
@@ -30,10 +26,10 @@ public class MaintenanceControllerImpl implements MaintenanceController {
     public void createMaintenance() {
         Maintenance maintenance = new Maintenance();
         System.out.print("¬ведите название услуги: ");
-        String name = utilReader.readLine();
+        String name = ReaderUtil.readLine();
         maintenance.setName(name);
         System.out.print("¬ведите цену услуги: ");
-        int price = utilReader.readInt();
+        int price = ReaderUtil.readInt();
         maintenance.setPrice(price);
         maintenanceService.create(maintenance, IdCreatorEnum.MAINTENANCE);
         System.out.println("”слуга создана!");
@@ -42,9 +38,9 @@ public class MaintenanceControllerImpl implements MaintenanceController {
     @Override
     public void changePriceToMaintenance() {
         System.out.print("¬ведите id услуги: ");
-        Long id = utilReader.readLong();
+        Long id = ReaderUtil.readLong();
         System.out.print("¬ведите новую цену услуги: ");
-        int price = utilReader.readInt();
+        int price = ReaderUtil.readInt();
         maintenanceService.changePriceToMaintenance(id, price);
         System.out.println("÷ена изменена!");
     }
@@ -52,27 +48,24 @@ public class MaintenanceControllerImpl implements MaintenanceController {
     @Override
     public void addMaintenanceToGuest() throws ParseException {
         System.out.print("¬ведите id услуги: ");
-        Long idMaintenance = utilReader.readLong();
+        Long idMaintenance = ReaderUtil.readLong();
         System.out.print("¬ведите id гост€: ");
-        Long idGuest = utilReader.readLong();
+        Long idGuest = ReaderUtil.readLong();
         System.out.print("¬ведите дату в формате дд.мм.гггг: ");
-        Calendar calendar = new GregorianCalendar();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        String str = utilReader.readLine();
-        calendar.setTime(sdf.parse(str));
+        Calendar calendar = ReaderUtil.dateReadInDdMmYyyyFormat();
         maintenanceService.addMaintenanceToGuest(idMaintenance, idGuest, calendar);
         System.out.println("”слуга добавлена гостю!");
     }
 
     @Override
     public void getMaintenanceSortedByPrice() {
-        UtilityFunctions.printFunc(maintenanceService.getMaintenanceSortedByPrice());
+        maintenanceService.getMaintenanceSortedByPrice().forEach(System.out::println);
     }
 
     @Override
     public void getMaintenancesForGuestSortedByPriceByDate() {
         System.out.print("¬ведите id гост€: ");
-        Long id = utilReader.readLong();
-        UtilityFunctions.printFunc(maintenanceService.getMaintenancesForGuestSortedByPriceThenByDate(id));
+        Long id = ReaderUtil.readLong();
+        maintenanceService.getMaintenancesForGuestSortedByPriceThenByDate(id).forEach(System.out::println);
     }
 }

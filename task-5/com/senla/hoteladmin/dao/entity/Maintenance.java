@@ -6,16 +6,16 @@ import java.util.Calendar;
 public class Maintenance extends AbstractEntity {
     private String name;
     private int price;
-    private Calendar date;
+    private Calendar maintenanceProvidingDate;
 
     public Maintenance() {
     }
 
-    public Maintenance(String name, int price, Long id, Calendar date) {
+    public Maintenance(String name, int price, Long id, Calendar maintenanceProvidingDate) {
         this.name = name;
         this.price = price;
         setId(id);
-        this.date = date;
+        this.maintenanceProvidingDate = maintenanceProvidingDate;
     }
 
     public String getName() {
@@ -34,13 +34,13 @@ public class Maintenance extends AbstractEntity {
         this.price = price;
     }
 
-    public Calendar getDate() {
-        return date;
+    public Calendar getMaintenanceProvidingDate() {
+        return maintenanceProvidingDate;
     }
 
     @Override
     public String toString() {
-        if (date == null) {
+        if (maintenanceProvidingDate == null) {
             return "Maintenance{" +
                     "id=" + getId() +
                     ", name='" + name + '\'' +
@@ -54,7 +54,7 @@ public class Maintenance extends AbstractEntity {
                     ", name='" + name + '\'' +
                     ", price=" + price +
                     ", id=" + getId() +
-                    ", date=" + simpleDateFormat.format(date.getTime()) +
+                    ", date=" + simpleDateFormat.format(maintenanceProvidingDate.getTime()) +
                     '}';
         }
     }

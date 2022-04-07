@@ -7,7 +7,7 @@ import com.senla.hoteladmin.util.RoomStatusEnum;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Stream;
 
 public interface RoomService extends AbstractService<Room> {
     void addToRoom(Long id, Guest guest, int days);
@@ -22,7 +22,7 @@ public interface RoomService extends AbstractService<Room> {
 
     List<Room> listOfFreeRoomsByDate(Calendar date);
 
-    Set<Room> getRoomSortedByPriceByMaxGuestsByStars(RoomSortEnum roomSortEnum);
+    Stream<Room> getRoomSortedByPriceByMaxGuestsByStars(RoomSortEnum roomSortEnum);
 
     String getLastThreeGuest(Long id);
 

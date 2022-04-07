@@ -11,8 +11,7 @@ import com.senla.hoteladmin.util.MaintenancePriceComparator;
 
 import java.util.Calendar;
 import java.util.Comparator;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.stream.Stream;
 
 public class MaintenanceServiceImpl extends AbstractServiceImpl<Maintenance, MaintenanceDao> implements MaintenanceService {
     private RoomDao roomDao;
@@ -40,19 +39,15 @@ public class MaintenanceServiceImpl extends AbstractServiceImpl<Maintenance, Mai
     }
 
     @Override
-    public Set<Maintenance> getMaintenanceSortedByPrice() {
+    public Stream<Maintenance> getMaintenanceSortedByPrice() {
         Comparator<Maintenance> maintenanceComparator = new MaintenancePriceComparator();
-        Set<Maintenance> maintenanceTreeSet = new TreeSet<>(maintenanceComparator);
-        maintenanceTreeSet.addAll(maintenanceDao.getAll());
-        return maintenanceTreeSet;
+        return maintenanceDao.getAll().stream().sorted(maintenanceComparator);
     }
 
     @Override
-    public Set<Maintenance> getMaintenancesForGuestSortedByPriceThenByDate(Long guestId) {
+    public Stream<Maintenance> getMaintenancesForGuestSortedByPriceThenByDate(Long guestId) {
         Comparator<Maintenance> maintenanceComparator = new MaintenancePriceComparator().thenComparing(new MaintenanceDateComparator());
-        Set<Maintenance> maintenanceTreeSet = new TreeSet<>(maintenanceComparator);
         Guest guest = guestDao.getById(guestId);
-        maintenanceTreeSet.addAll(guest.getMaintenances());
-        return maintenanceTreeSet;
+        return guest.getMaintenances().stream().sorted(maintenanceComparator);
     }
 }

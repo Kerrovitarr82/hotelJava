@@ -11,8 +11,8 @@ import com.senla.hoteladmin.util.GuestDateComparator;
 import com.senla.hoteladmin.util.RoomStatusEnum;
 
 import java.util.Comparator;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.Date;
+import java.util.stream.Stream;
 
 public class GuestServiceImpl extends AbstractServiceImpl<Guest, GuestDao> implements GuestService {
     private RoomDao roomDao;
@@ -39,7 +39,11 @@ public class GuestServiceImpl extends AbstractServiceImpl<Guest, GuestDao> imple
 
     @Override
     public int getTotalPriceForGuest(Long guestId) {
-        return guestDao.getTotalPrice(guestId);
+        Guest guest = guestDao.getById(guestId);
+        Date currentDate = new Date();
+        Date lastDateOfGuest = guest.getLastDay().getTime();
+        int total = (int) (guest.getRoom().getPrice() * ((lastDateOfGuest.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24) + 1));
+        return total;
     }
 
     @Override
@@ -48,10 +52,8 @@ public class GuestServiceImpl extends AbstractServiceImpl<Guest, GuestDao> imple
     }
 
     @Override
-    public Set<Guest> getGuestSortedByNameByEvicDate() {
+    public Stream<Guest> getGuestSortedByNameByEvicDate() {
         Comparator<Guest> guestComparator = new GuestAlphabetComparator().thenComparing(new GuestDateComparator());
-        Set<Guest> guestTreeSet = new TreeSet<>(guestComparator);
-        guestTreeSet.addAll(guestDao.getAll());
-        return guestTreeSet;
+        return guestDao.getAll().stream().sorted(guestComparator);
     }
 }

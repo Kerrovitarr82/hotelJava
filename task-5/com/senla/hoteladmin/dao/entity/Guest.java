@@ -8,7 +8,6 @@ import java.util.List;
 public class Guest extends AbstractEntity {
     private String name;
     private Room room;
-    private int totalPrice;
     private Calendar firstDay;
     private Calendar lastDay;
     private List<Maintenance> maintenances = new ArrayList<>();
@@ -47,14 +46,6 @@ public class Guest extends AbstractEntity {
 
     public List<Maintenance> getMaintenances() {
         return maintenances;
-    }
-
-    public int getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(int totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     public void setFirstDay(Calendar firstDay) {
