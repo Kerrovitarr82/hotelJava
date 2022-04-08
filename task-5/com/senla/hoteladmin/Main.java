@@ -36,8 +36,7 @@ public class Main {
         MaintenanceController maintenanceController = new MaintenanceControllerImpl(roomService, guestService, maintenanceService);
         MenuController menuController = new MenuControllerImpl(roomController, guestController, maintenanceController);
 
-        menuController.getMenu();
-
+        menuController.run();
 
     }
 }

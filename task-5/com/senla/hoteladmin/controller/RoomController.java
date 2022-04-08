@@ -2,7 +2,7 @@ package com.senla.hoteladmin.controller;
 
 import java.text.ParseException;
 
-public interface RoomController {
+public interface RoomController extends ControllerInterface {
     void createRoom();
 
     void addToRoom();
@@ -17,7 +17,9 @@ public interface RoomController {
 
     void listOfFreeRoomsByDate() throws ParseException;
 
-    void getRoomSortedByPriceByMaxGuestsByStars();
+    void getAllRoomSortedByPriceByMaxGuestsByStars();
+
+    void getFreeRoomSortedByPriceByMaxGuestsByStars();
 
     void getLastThreeGuest();
 

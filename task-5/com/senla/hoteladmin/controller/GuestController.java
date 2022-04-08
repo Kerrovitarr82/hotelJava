@@ -1,6 +1,6 @@
 package com.senla.hoteladmin.controller;
 
-public interface GuestController {
+public interface GuestController extends ControllerInterface {
     void deleteGuest();
 
     void getTotalPriceForGuest();

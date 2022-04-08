@@ -2,7 +2,7 @@ package com.senla.hoteladmin.controller;
 
 import java.text.ParseException;
 
-public interface MaintenanceController {
+public interface MaintenanceController extends ControllerInterface {
     void createMaintenance();
 
     void changePriceToMaintenance();

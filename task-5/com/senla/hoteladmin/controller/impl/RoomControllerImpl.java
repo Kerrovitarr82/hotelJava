@@ -108,18 +108,13 @@ public class RoomControllerImpl implements RoomController {
     }
 
     @Override
-    public void getRoomSortedByPriceByMaxGuestsByStars() {
-        System.out.println("Выберите что именно вы хотите отсортировать");
-        System.out.println("1) Все комнаты\n2) Свободные комнаты");
-        int switchChoice = ReaderUtil.readInt();
-        switch (switchChoice) {
-            case 1 -> {
-                roomService.getRoomSortedByPriceByMaxGuestsByStars(RoomSortEnum.ALL_ROOMS).forEach(System.out::println);
-            }
-            case 2 -> {
-                roomService.getRoomSortedByPriceByMaxGuestsByStars(RoomSortEnum.FREE_ROOMS).forEach(System.out::println);
-            }
-        }
+    public void getAllRoomSortedByPriceByMaxGuestsByStars() {
+        roomService.getRoomSortedByPriceByMaxGuestsByStars(RoomSortEnum.ALL_ROOMS).forEach(System.out::println);
+    }
+
+    @Override
+    public void getFreeRoomSortedByPriceByMaxGuestsByStars() {
+        roomService.getRoomSortedByPriceByMaxGuestsByStars(RoomSortEnum.FREE_ROOMS).forEach(System.out::println);
     }
 
     @Override
