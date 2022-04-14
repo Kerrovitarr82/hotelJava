@@ -32,7 +32,7 @@ public class ExportRoomCsvServiceImpl extends AbstractServiceImpl<Room, RoomDao>
         csvReader.close();
         boolean existInFile = false;
         for (String[] row : allRows) {
-            if (row[0].equals("id")){
+            if (row[0].equals("id")) {
                 continue;
             }
             if (Long.parseLong(row[0]) == id) {

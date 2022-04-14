@@ -1,7 +1,6 @@
 package com.senla.hoteladmin.dao.entity;
 
 import com.opencsv.bean.CsvBindByName;
-import com.opencsv.bean.CsvDate;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

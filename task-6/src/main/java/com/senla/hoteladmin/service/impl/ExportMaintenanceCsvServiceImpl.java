@@ -3,14 +3,9 @@ package com.senla.hoteladmin.service.impl;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
-import com.opencsv.exceptions.CsvValidationException;
 import com.senla.hoteladmin.dao.MaintenanceDao;
-import com.senla.hoteladmin.dao.RoomDao;
 import com.senla.hoteladmin.dao.entity.Maintenance;
-import com.senla.hoteladmin.dao.entity.Room;
 import com.senla.hoteladmin.service.ExportMaintenanceCsvService;
-import com.senla.hoteladmin.service.ExportRoomCsvService;
-import com.senla.hoteladmin.ui.Menu;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -28,7 +23,7 @@ public class ExportMaintenanceCsvServiceImpl extends AbstractServiceImpl<Mainten
         CSVReader csvReader = new CSVReader(new FileReader(pathToCsv));
         if (csvReader.peek() == null) {
             CSVWriter csvWriter = new CSVWriter(new FileWriter(pathToCsv, true));
-            String[] header = {"id","name", "price"};
+            String[] header = {"id", "name", "price"};
             csvWriter.writeNext(header);
             csvWriter.close();
         }
@@ -37,7 +32,7 @@ public class ExportMaintenanceCsvServiceImpl extends AbstractServiceImpl<Mainten
         csvReader.close();
         boolean existInFile = false;
         for (String[] row : allRows) {
-            if (row[0].equals("id")){
+            if (row[0].equals("id")) {
                 continue;
             }
             if (Long.parseLong(row[0]) == id) {

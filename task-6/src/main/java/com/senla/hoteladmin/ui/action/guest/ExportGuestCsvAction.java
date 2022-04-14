@@ -1,7 +1,6 @@
 package com.senla.hoteladmin.ui.action.guest;
 
 import com.opencsv.exceptions.CsvException;
-import com.opencsv.exceptions.CsvValidationException;
 import com.senla.hoteladmin.controller.CsvController;
 import com.senla.hoteladmin.ui.action.IAction;
 

@@ -3,13 +3,9 @@ package com.senla.hoteladmin.service.impl;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
-import com.opencsv.exceptions.CsvValidationException;
 import com.senla.hoteladmin.dao.GuestDao;
-import com.senla.hoteladmin.dao.RoomDao;
 import com.senla.hoteladmin.dao.entity.Guest;
-import com.senla.hoteladmin.dao.entity.Room;
 import com.senla.hoteladmin.service.ExportGuestCsvService;
-import com.senla.hoteladmin.service.ExportRoomCsvService;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -28,7 +24,7 @@ public class ExportGuestCsvServiceImpl extends AbstractServiceImpl<Guest, GuestD
         CSVReader csvReader = new CSVReader(new FileReader(pathToCsv));
         if (csvReader.peek() == null) {
             CSVWriter csvWriter = new CSVWriter(new FileWriter(pathToCsv, true));
-            String[] header = {"id","name", "first day", "last day"};
+            String[] header = {"id", "name", "first day", "last day"};
             csvWriter.writeNext(header);
             csvWriter.close();
         }
@@ -38,7 +34,7 @@ public class ExportGuestCsvServiceImpl extends AbstractServiceImpl<Guest, GuestD
         boolean existInFile = false;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E dd.MM.yyyy");
         for (String[] row : allRows) {
-            if (row[0].equals("id")){
+            if (row[0].equals("id")) {
                 continue;
             }
             if (Long.parseLong(row[0]) == id) {

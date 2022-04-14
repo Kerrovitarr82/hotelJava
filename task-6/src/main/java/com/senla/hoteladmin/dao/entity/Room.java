@@ -1,7 +1,6 @@
 package com.senla.hoteladmin.dao.entity;
 
 import com.opencsv.bean.CsvBindByName;
-import com.opencsv.bean.CsvBindByPosition;
 import com.senla.hoteladmin.util.RoomStatusEnum;
 
 import java.util.ArrayList;
