@@ -1,7 +1,6 @@
 package com.senla.hoteladmin.service.impl;
 
 import com.opencsv.CSVReader;
-import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.exceptions.CsvValidationException;
 import com.senla.hoteladmin.dao.GuestDao;
 import com.senla.hoteladmin.dao.MaintenanceDao;
@@ -13,13 +12,10 @@ import com.senla.hoteladmin.service.ImportGuestsCsvService;
 import com.senla.hoteladmin.util.DateParserUtil;
 import com.senla.hoteladmin.util.RoomStatusEnum;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 
 public class ImportGuestsCsvServiceImpl extends AbstractServiceImpl<Guest, GuestDao> implements ImportGuestsCsvService {
@@ -118,7 +114,7 @@ public class ImportGuestsCsvServiceImpl extends AbstractServiceImpl<Guest, Guest
         return maintenanceDao.getAll().get(maintenanceDao.getAll().size() - 1);
     }
 
-    private void addMaintenanceWithoutRepeats(Guest guest, Maintenance maintenance, Calendar calendar){
+    private void addMaintenanceWithoutRepeats(Guest guest, Maintenance maintenance, Calendar calendar) {
         for (Maintenance maintenance1 : guest.getMaintenances()) {
             if ((!maintenance1.getMaintenanceProvidingDate().getTime().equals(calendar.getTime())
                     && maintenance1.getId().equals(maintenance.getId())) || maintenance1.getId() == null) {

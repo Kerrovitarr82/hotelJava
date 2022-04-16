@@ -115,7 +115,7 @@ public class ImportRoomsCsvServiceImpl extends AbstractServiceImpl<Room, RoomDao
         return maintenanceDao.getAll().get(maintenanceDao.getAll().size() - 1);
     }
 
-    private void addMaintenanceWithoutRepeats(Guest guest, Maintenance maintenance, Calendar calendar){
+    private void addMaintenanceWithoutRepeats(Guest guest, Maintenance maintenance, Calendar calendar) {
         for (Maintenance maintenance1 : guest.getMaintenances()) {
             if ((!maintenance1.getMaintenanceProvidingDate().getTime().equals(calendar.getTime())
                     && maintenance1.getId().equals(maintenance.getId())) || maintenance1.getId() == null) {

@@ -1,7 +1,6 @@
 package com.senla.hoteladmin.dao.entity;
 
 import com.opencsv.bean.CsvBindByName;
-import com.opencsv.bean.CsvCustomBindByNames;
 
 public class AbstractEntity {
     @CsvBindByName(column = "room Id", profiles = "room")
