@@ -12,6 +12,7 @@ public class Maintenance extends AbstractEntity {
     @CsvBindByName(column = "price")
     private int price;
 
+    @CsvBindByName(column = "maintenance providing date")
     private Calendar maintenanceProvidingDate;
 
     public Maintenance() {
@@ -51,7 +52,6 @@ public class Maintenance extends AbstractEntity {
                     "id=" + getId() +
                     ", name='" + name + '\'' +
                     ", price=" + price +
-                    ", id=" + getId() +
                     '}';
         } else {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E dd.MM.yyyy hh:mm");
@@ -59,7 +59,6 @@ public class Maintenance extends AbstractEntity {
                     "id=" + getId() +
                     ", name='" + name + '\'' +
                     ", price=" + price +
-                    ", id=" + getId() +
                     ", date=" + simpleDateFormat.format(maintenanceProvidingDate.getTime()) +
                     '}';
         }

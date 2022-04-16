@@ -52,8 +52,8 @@ public class Main {
         ExportRoomCsvService exportRoomCsvService = new ExportRoomCsvServiceImpl(roomDao);
         ExportGuestCsvService exportGuestCsvService = new ExportGuestCsvServiceImpl(guestDao);
         ExportMaintenanceCsvService exportMaintenanceCsvService = new ExportMaintenanceCsvServiceImpl(maintenanceDao);
-        ImportRoomsCsvService importRoomsCsvService = new ImportRoomsCsvServiceImpl(roomDao);
-        ImportGuestsCsvService importGuestsCsvService = new ImportGuestsCsvServiceImpl(guestDao);
+        ImportRoomsCsvService importRoomsCsvService = new ImportRoomsCsvServiceImpl(roomDao, guestDao, maintenanceDao);
+        ImportGuestsCsvService importGuestsCsvService = new ImportGuestsCsvServiceImpl(guestDao, roomDao, maintenanceDao);
         ImportMaintenancesCsvService importMaintenancesCsvService = new ImportMaintenancesCsvServiceImpl(maintenanceDao);
         RoomController roomController = new RoomControllerImpl(roomService, guestService);
         GuestController guestController = new GuestControllerImpl(roomService, guestService);

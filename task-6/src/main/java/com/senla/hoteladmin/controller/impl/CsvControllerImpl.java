@@ -1,6 +1,7 @@
 package com.senla.hoteladmin.controller.impl;
 
 import com.opencsv.exceptions.CsvException;
+import com.opencsv.exceptions.CsvValidationException;
 import com.senla.hoteladmin.controller.CsvController;
 import com.senla.hoteladmin.service.ExportGuestCsvService;
 import com.senla.hoteladmin.service.ExportMaintenanceCsvService;
@@ -8,10 +9,10 @@ import com.senla.hoteladmin.service.ExportRoomCsvService;
 import com.senla.hoteladmin.service.ImportGuestsCsvService;
 import com.senla.hoteladmin.service.ImportMaintenancesCsvService;
 import com.senla.hoteladmin.service.ImportRoomsCsvService;
-import com.senla.hoteladmin.util.ReaderUtil;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 
 public class CsvControllerImpl implements CsvController {
     private ExportRoomCsvService exportRoomCsvService;
@@ -36,38 +37,32 @@ public class CsvControllerImpl implements CsvController {
     }
 
     @Override
-    public void importRoomsCsv() throws FileNotFoundException {
-        importRoomsCsvService.importCsv("task-6/src/main/java/com/senla/hoteladmin/rooms.csv");
+    public void importRoomsCsv() throws IOException, CsvValidationException, ParseException {
+        importRoomsCsvService.importCsv("task-6/src/main/java/com/senla/hoteladmin/roomsImport.csv");
     }
 
     @Override
-    public void importGuestsCsv() throws FileNotFoundException {
-        importGuestsCsvService.importCsv("task-6/src/main/java/com/senla/hoteladmin/guests.csv");
+    public void importGuestsCsv() throws IOException, CsvValidationException, ParseException {
+        importGuestsCsvService.importCsv("task-6/src/main/java/com/senla/hoteladmin/guestsImport.csv");
     }
 
     @Override
-    public void importMaintenancesCsv() throws FileNotFoundException {
-        importMaintenancesCsvService.importCsv("task-6/src/main/java/com/senla/hoteladmin/maintenances.csv");
+    public void importMaintenancesCsv() throws IOException, CsvValidationException {
+        importMaintenancesCsvService.importCsv("task-6/src/main/java/com/senla/hoteladmin/maintenancesImport.csv");
     }
 
     @Override
     public void exportRoomCsv() throws IOException, CsvException {
-        System.out.println("¬ведите id");
-        Long id = ReaderUtil.readLong();
-        exportRoomCsvService.exportCsv("task-6/src/main/java/com/senla/hoteladmin/rooms.csv", id);
+        exportRoomCsvService.exportCsv("task-6/src/main/java/com/senla/hoteladmin/roomsExport.csv");
     }
 
     @Override
     public void exportGuestCsv() throws IOException, CsvException {
-        System.out.println("¬ведите id");
-        Long id = ReaderUtil.readLong();
-        exportGuestCsvService.exportCsv("task-6/src/main/java/com/senla/hoteladmin/guests.csv", id);
+        exportGuestCsvService.exportCsv("task-6/src/main/java/com/senla/hoteladmin/guestsExport.csv");
     }
 
     @Override
     public void exportMaintenanceCsv() throws IOException, CsvException {
-        System.out.println("¬ведите id");
-        Long id = ReaderUtil.readLong();
-        exportMaintenanceCsvService.exportCsv("task-6/src/main/java/com/senla/hoteladmin/maintenances.csv", id);
+        exportMaintenanceCsvService.exportCsv("task-6/src/main/java/com/senla/hoteladmin/maintenancesExport.csv");
     }
 }

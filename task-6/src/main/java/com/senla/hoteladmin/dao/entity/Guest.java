@@ -12,6 +12,7 @@ public class Guest extends AbstractEntity {
     @CsvBindByName(column = "name")
     private String name;
 
+    @CsvBindByName(column = "room")
     private Room room;
 
     @CsvBindByName(column = "first day")
@@ -22,6 +23,7 @@ public class Guest extends AbstractEntity {
     @CsvDate("E dd.MM.yyyy")
     private Calendar lastDay;
 
+    @CsvBindByName(column = "maintenances")
     private List<Maintenance> maintenances = new ArrayList<>();
 
     public String getName() {
@@ -54,6 +56,10 @@ public class Guest extends AbstractEntity {
 
     public void addMaintenances(Maintenance maintenance) {
         this.maintenances.add(maintenance);
+    }
+
+    public void setMaintenances(List<Maintenance> maintenances) {
+        this.maintenances = maintenances;
     }
 
     public List<Maintenance> getMaintenances() {

@@ -27,10 +27,8 @@ public class ReaderUtil {
     }
 
     public static Calendar dateReadInDdMmYyyyFormat() throws ParseException {
-        Calendar calendar = new GregorianCalendar();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         String str = ReaderUtil.readLine();
-        calendar.setTime(sdf.parse(str));
+        Calendar calendar = DateParserUtil.dateParseInDdMmYyyyFormat(str);
         return calendar;
     }
 }

@@ -72,7 +72,7 @@ public class Builder {
                 new MenuItem("9) Вывести свободные номера в сортированном виде", new GetFreeRoomSortedByPriceByMaxGuestsByStarsAction(roomController), null),
                 new MenuItem("10) Вывести последних трех гостей номера", new GetLastThreeGuestAction(roomController), null),
                 new MenuItem("11) Вывести детали номера", new RoomDetailsAction(roomController), null),
-                new MenuItem("12) Экспорт комнаты в csv", new ExportRoomCsvAction(csvController), null),
+                new MenuItem("12) Экспорт комнат в csv", new ExportRoomCsvAction(csvController), null),
                 new MenuItem("13) Импорт комнат из csv", new ImportRoomCsvAction(csvController), null),
                 new MenuItem("14) Выход", null, rootMenu));
 
@@ -82,7 +82,7 @@ public class Builder {
                 new MenuItem("2) Получить полную стоимость для гостя", new GetTotalPriceForGuestAction(guestController), null),
                 new MenuItem("3) Общее число гостей", new TotalNumberOfGuestsAction(guestController), null),
                 new MenuItem("4) Сортировка гостей", new GetGuestSortedByNameByEvicDateAction(guestController), null),
-                new MenuItem("5) Экспорт гостя в csv", new ExportGuestCsvAction(csvController), null),
+                new MenuItem("5) Экспорт гостей в csv", new ExportGuestCsvAction(csvController), null),
                 new MenuItem("6) Импорт гостей из csv", new ImportGuestsCsvAction(csvController), null),
                 new MenuItem("7) Выход", null, rootMenu));
 
@@ -94,7 +94,7 @@ public class Builder {
                 new MenuItem("4) Все услуги", new PrintAllMaintenanceAction(maintenanceController), null),
                 new MenuItem("5) Сортировка услуг", new GetMaintenanceSortedByPriceAction(maintenanceController), null),
                 new MenuItem("6) Сортировка услуг гостя", new GetMaintenanceForGuestSortedByPriceByDateAction(maintenanceController), null),
-                new MenuItem("7) Экспорт услуги в csv", new ExportMaintenanceCsvAction(csvController), null),
+                new MenuItem("7) Экспорт услуг в csv", new ExportMaintenanceCsvAction(csvController), null),
                 new MenuItem("8) Импорт услуг из csv", new ImportMaintenancesCsvAction(csvController), null),
                 new MenuItem("9) Выход", null, rootMenu));
     }

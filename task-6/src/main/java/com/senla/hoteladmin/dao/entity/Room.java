@@ -1,6 +1,8 @@
 package com.senla.hoteladmin.dao.entity;
 
+import com.opencsv.bean.CsvBindAndSplitByName;
 import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvRecurse;
 import com.senla.hoteladmin.util.RoomStatusEnum;
 
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class Room extends AbstractEntity {
     @CsvBindByName(column = "stars")
     private int stars;
 
+    @CsvBindAndSplitByName(elementType = Guest.class, splitOn = "\\|", column = "guests")
     private List<Guest> guests = new ArrayList<>();
 
     public RoomStatusEnum getStatus() {
@@ -66,6 +69,10 @@ public class Room extends AbstractEntity {
 
     public List<Guest> getGuests() {
         return guests;
+    }
+
+    public void setGuests(List<Guest> guests) {
+        this.guests = guests;
     }
 
     public void setGuest(Guest guest) {

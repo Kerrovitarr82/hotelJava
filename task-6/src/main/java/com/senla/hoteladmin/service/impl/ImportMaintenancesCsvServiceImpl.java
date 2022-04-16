@@ -1,12 +1,19 @@
 package com.senla.hoteladmin.service.impl;
 
+import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.opencsv.exceptions.CsvValidationException;
 import com.senla.hoteladmin.dao.MaintenanceDao;
+import com.senla.hoteladmin.dao.entity.Guest;
 import com.senla.hoteladmin.dao.entity.Maintenance;
+import com.senla.hoteladmin.dao.entity.Room;
 import com.senla.hoteladmin.service.ImportMaintenancesCsvService;
+import com.senla.hoteladmin.util.DateParserUtil;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -17,14 +24,32 @@ public class ImportMaintenancesCsvServiceImpl extends AbstractServiceImpl<Mainte
     }
 
     @Override
-    public void importCsv(String pathToCsv) throws FileNotFoundException {
-        List<Maintenance> importMaintenances = new CsvToBeanBuilder<Maintenance>(new FileReader(pathToCsv)).withType(Maintenance.class).build().parse();
-        for (Maintenance maintenance : importMaintenances) {
-            if (getById(maintenance.getId()) != null) {
-                update(maintenance.getId(), maintenance);
+    public void importCsv(String pathToCsv) throws IOException, CsvValidationException {
+        CSVReader csvReader = new CSVReader(new FileReader(pathToCsv));
+        Maintenance maintenance;
+        while (csvReader.peek() != null) {
+            String[] line = csvReader.readNext();
+            if (line[0].substring(0, 1).contains("/")) {
+                line = csvReader.readNext();
+            }
+            if (getById(Long.parseLong(line[0])) == null) {
+                maintenance = maintenanceCreationAndReturn(line);
             } else {
-                create(maintenance);
+                maintenance = getById(Long.parseLong(line[0]));
+                setMaintenanceAttributes(line, maintenance);
             }
         }
+    }
+
+    private void setMaintenanceAttributes(String[] line, Maintenance maintenance) {
+        maintenance.setName(line[1]);
+        maintenance.setPrice(Integer.parseInt(line[2]));
+    }
+
+    private Maintenance maintenanceCreationAndReturn(String[] line) {
+        Maintenance maintenance = new Maintenance();
+        setMaintenanceAttributes(line, maintenance);
+        create(maintenance);
+        return getAll().get(getAll().size() - 1);
     }
 }

@@ -6,5 +6,5 @@ import com.senla.hoteladmin.dao.entity.Guest;
 import java.io.IOException;
 
 public interface ExportGuestCsvService extends AbstractService<Guest> {
-    void exportCsv(String pathToCsv, Long id) throws IOException, CsvException;
+    void exportCsv(String pathToCsv) throws IOException, CsvException;
 }
