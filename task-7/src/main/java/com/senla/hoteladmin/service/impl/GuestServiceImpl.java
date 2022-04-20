@@ -41,9 +41,9 @@ public class GuestServiceImpl extends AbstractServiceImpl<Guest, GuestDao> imple
     @Override
     public int getTotalPriceForGuest(Long guestId) {
         Guest guest = guestDao.getById(guestId);
-        Date currentDate = new Date();
+        Date firstDateOfGuest = guest.getFirstDay().getTime();
         Date lastDateOfGuest = guest.getLastDay().getTime();
-        int total = (int) (guest.getRoom().getPrice() * ((lastDateOfGuest.getTime() - currentDate.getTime()) / MS_TO_DAYS_DIVIDER + 1));
+        int total = (int) (guest.getRoom().getPrice() * ((lastDateOfGuest.getTime() - firstDateOfGuest.getTime()) / MS_TO_DAYS_DIVIDER + 1));
         return total;
     }
 

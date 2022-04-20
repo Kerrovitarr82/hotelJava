@@ -5,18 +5,30 @@ public class IdCreatorForEntities {
     private Long numberOfGuestId = 0L;
     private Long numberOfMaintenanceId = 0L;
 
-    public Long createId(IdCreatorEnum idCreatorEnum) {
+    public Long createId(IdCreatorEnum idCreatorEnum, Long repositorySize) {
         switch (idCreatorEnum) {
             case ROOM -> {
-                numberOfRoomId++;
+                if (numberOfRoomId < repositorySize) {
+                    numberOfRoomId = repositorySize;
+                } else {
+                    numberOfRoomId++;
+                }
                 return numberOfRoomId;
             }
             case GUEST -> {
-                numberOfGuestId++;
+                if (numberOfGuestId < repositorySize) {
+                    numberOfGuestId = repositorySize;
+                } else {
+                    numberOfGuestId++;
+                }
                 return numberOfGuestId;
             }
             case MAINTENANCE -> {
-                numberOfMaintenanceId++;
+                if (numberOfMaintenanceId < repositorySize) {
+                    numberOfMaintenanceId = repositorySize;
+                } else {
+                    numberOfMaintenanceId++;
+                }
                 return numberOfMaintenanceId;
             }
         }

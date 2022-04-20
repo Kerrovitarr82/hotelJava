@@ -6,5 +6,5 @@ import java.io.IOException;
 import java.text.ParseException;
 
 public interface MenuController extends ControllerInterface {
-    void run() throws ParseException, CsvException, IOException;
+    void run() throws ParseException, CsvException, IOException, ClassNotFoundException;
 }

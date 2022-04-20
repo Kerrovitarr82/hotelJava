@@ -1,5 +1,6 @@
 package com.senla.hoteladmin.controller;
 
+import java.io.IOException;
 import java.text.ParseException;
 
 public interface MaintenanceController extends ControllerInterface {
@@ -14,4 +15,8 @@ public interface MaintenanceController extends ControllerInterface {
     void getMaintenancesForGuestSortedByPriceByDate();
 
     void getAll();
+
+    void maintenanceSerialization() throws IOException;
+
+    void maintenanceDeserialization() throws IOException, ClassNotFoundException;
 }

@@ -3,12 +3,13 @@ package com.senla.hoteladmin.dao.entity;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class Guest extends AbstractEntity {
+public class Guest extends AbstractEntity implements Serializable {
     @CsvBindByName(column = "name")
     private String name;
 

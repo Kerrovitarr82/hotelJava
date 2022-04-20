@@ -2,7 +2,9 @@ package com.senla.hoteladmin.dao.entity;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class AbstractEntity {
+import java.io.Serializable;
+
+public class AbstractEntity implements Serializable {
     @CsvBindByName(column = "room Id", profiles = "room")
     @CsvBindByName(column = "guest Id", profiles = "guest")
     @CsvBindByName(column = "maintenance Id", profiles = "maintenance")

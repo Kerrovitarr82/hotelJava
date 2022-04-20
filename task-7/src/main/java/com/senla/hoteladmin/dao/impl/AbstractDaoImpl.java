@@ -16,7 +16,7 @@ public abstract class AbstractDaoImpl<T extends AbstractEntity> implements Abstr
 
     public T getById(Long id) {
         for (T entity : repository) {
-            if (entity.getId() == id) {
+            if (entity.getId().equals(id)) {
                 return entity;
             }
         }
@@ -38,11 +38,11 @@ public abstract class AbstractDaoImpl<T extends AbstractEntity> implements Abstr
 
     public void create(T entity) {
         if (entity.getClass() == Room.class) {
-            entity.setId(idCreatorForEntities.createId(IdCreatorEnum.ROOM));
+            entity.setId(idCreatorForEntities.createId(IdCreatorEnum.ROOM, (long) repository.size()));
         } else if (entity.getClass() == Guest.class) {
-            entity.setId(idCreatorForEntities.createId(IdCreatorEnum.GUEST));
+            entity.setId(idCreatorForEntities.createId(IdCreatorEnum.GUEST, (long) repository.size()));
         } else {
-            entity.setId(idCreatorForEntities.createId(IdCreatorEnum.MAINTENANCE));
+            entity.setId(idCreatorForEntities.createId(IdCreatorEnum.MAINTENANCE, (long) repository.size()));
         }
         repository.add(entity);
     }

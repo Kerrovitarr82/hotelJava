@@ -24,7 +24,19 @@ public class RoomDaoImpl extends AbstractDaoImpl<Room> implements RoomDao {
         if (guest == null) {
             room.getGuests().clear();
         } else {
-            room.setGuest(guest);
+            setGuest(room, guest);
+        }
+    }
+
+    @Override
+    public void setGuest(Room room, Guest guest) {
+        if (room.getHistoryOfGuests().size() != room.getMaxGuestsInHistory()) {
+            room.getGuests().add(guest);
+            room.getHistoryOfGuests().addLast(guest);
+        } else {
+            room.getGuests().add(guest);
+            room.getHistoryOfGuests().pollFirst();
+            room.getHistoryOfGuests().addLast(guest);
         }
     }
 
@@ -35,7 +47,7 @@ public class RoomDaoImpl extends AbstractDaoImpl<Room> implements RoomDao {
             String threeGuests = "";
         };
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E dd.MM.yyyy");
-        room.getGuests().stream().sorted(new GuestDateComparatorDescending()).limit(3).forEach(guest -> {
+        room.getHistoryOfGuests().stream().sorted(new GuestDateComparatorDescending()).limit(3).forEach(guest -> {
             wrapper.threeGuests += "Имя: " + guest.getName() +
                     ". Дата заезда: " + simpleDateFormat.format(guest.getFirstDay().getTime()) +
                     ". Дата выезда: " + simpleDateFormat.format(guest.getLastDay().getTime()) + "\n";

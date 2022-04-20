@@ -5,15 +5,15 @@ import com.senla.hoteladmin.ui.action.IAction;
 
 import java.io.IOException;
 
-public class CreateRoomAction implements IAction {
+public class SwitchCanChangeStatusAction implements IAction {
     private RoomController roomController;
 
-    public CreateRoomAction(RoomController roomController) {
+    public SwitchCanChangeStatusAction(RoomController roomController) {
         this.roomController = roomController;
     }
 
     @Override
     public void execute() throws IOException {
-        roomController.createRoom();
+        roomController.switchCanChangeStatus();
     }
 }

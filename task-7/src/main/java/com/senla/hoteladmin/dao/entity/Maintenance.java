@@ -2,10 +2,11 @@ package com.senla.hoteladmin.dao.entity;
 
 import com.opencsv.bean.CsvBindByName;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Maintenance extends AbstractEntity {
+public class Maintenance extends AbstractEntity implements Serializable {
     @CsvBindByName(column = "name")
     private String name;
 

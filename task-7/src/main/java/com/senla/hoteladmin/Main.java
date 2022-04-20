@@ -42,7 +42,7 @@ import java.io.IOException;
 import java.text.ParseException;
 
 public class Main {
-    public static void main(String[] args) throws ParseException, CsvException, IOException {
+    public static void main(String[] args) throws ParseException, CsvException, IOException, ClassNotFoundException {
         RoomDao roomDao = new RoomDaoImpl();
         GuestDao guestDao = new GuestDaoImpl();
         MaintenanceDao maintenanceDao = new MaintenanceDaoImpl();

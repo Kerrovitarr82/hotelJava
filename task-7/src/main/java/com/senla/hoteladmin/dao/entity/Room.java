@@ -4,15 +4,20 @@ import com.opencsv.bean.CsvBindAndSplitByName;
 import com.opencsv.bean.CsvBindByName;
 import com.senla.hoteladmin.util.RoomStatusEnum;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 
-public class Room extends AbstractEntity {
+public class Room extends AbstractEntity implements Serializable {
     @CsvBindByName(column = "number")
     private int number;
 
     @CsvBindByName(column = "status")
     private RoomStatusEnum status;
+
+    private boolean canChangeStatus = true;
 
     @CsvBindByName(column = "price")
     private int price;
@@ -25,6 +30,10 @@ public class Room extends AbstractEntity {
 
     @CsvBindAndSplitByName(elementType = Guest.class, splitOn = "\\|", column = "guests")
     private List<Guest> guests = new ArrayList<>();
+
+    private int maxGuestsInHistory;
+
+    private Deque<Guest> historyOfGuests = new LinkedList<>();
 
     public RoomStatusEnum getStatus() {
         return status;
@@ -78,6 +87,30 @@ public class Room extends AbstractEntity {
         guests.add(guest);
     }
 
+    public boolean isCanChangeStatus() {
+        return canChangeStatus;
+    }
+
+    public void setCanChangeStatus(boolean canChangeStatus) {
+        this.canChangeStatus = canChangeStatus;
+    }
+
+    public int getMaxGuestsInHistory() {
+        return maxGuestsInHistory;
+    }
+
+    public void setMaxGuestsInHistory(int maxGuestsInHistory) {
+        this.maxGuestsInHistory = maxGuestsInHistory;
+    }
+
+    public Deque<Guest> getHistoryOfGuests() {
+        return historyOfGuests;
+    }
+
+    public void setHistoryOfGuests(Deque<Guest> historyOfGuests) {
+        this.historyOfGuests = historyOfGuests;
+    }
+
     @Override
     public String toString() {
         if (guests.size() != 0) {
@@ -85,8 +118,10 @@ public class Room extends AbstractEntity {
                     "id=" + getId() +
                     ", number=" + number +
                     ", status=" + status +
+                    ", canChangeStatus=" + canChangeStatus +
                     ", price=" + price +
                     ", maxGuests=" + maxGuests +
+                    ", maxGuestsInHistory=" + maxGuestsInHistory +
                     ", stars=" + stars +
                     ", guests=" + guests +
                     '}';
@@ -97,6 +132,7 @@ public class Room extends AbstractEntity {
                     ", status=" + status +
                     ", price=" + price +
                     ", maxGuests=" + maxGuests +
+                    ", maxGuestsInHistory=" + maxGuestsInHistory +
                     ", stars=" + stars +
                     '}';
         }

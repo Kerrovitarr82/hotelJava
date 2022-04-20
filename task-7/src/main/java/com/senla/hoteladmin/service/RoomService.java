@@ -5,6 +5,7 @@ import com.senla.hoteladmin.dao.entity.Room;
 import com.senla.hoteladmin.util.RoomSortEnum;
 import com.senla.hoteladmin.util.RoomStatusEnum;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Stream;
@@ -14,9 +15,11 @@ public interface RoomService extends AbstractService<Room> {
 
     void deleteFromRoom(Long id);
 
-    void changeStatus(Long id, RoomStatusEnum status);
+    void changeStatus(Room room, RoomStatusEnum status);
 
     void changePriceToRoom(Long id, int price);
+
+    void switchCanChangeStatus(Room room) throws IOException;
 
     int totalNumberOfFreeRooms();
 
@@ -28,4 +31,5 @@ public interface RoomService extends AbstractService<Room> {
 
     String roomDetails(Long id);
 
+    String roomHistory(Long id);
 }

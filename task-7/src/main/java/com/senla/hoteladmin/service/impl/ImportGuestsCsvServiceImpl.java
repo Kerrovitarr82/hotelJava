@@ -12,10 +12,12 @@ import com.senla.hoteladmin.service.ImportGuestsCsvService;
 import com.senla.hoteladmin.util.DateParserUtil;
 import com.senla.hoteladmin.util.RoomStatusEnum;
 
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Properties;
 
 
 public class ImportGuestsCsvServiceImpl extends AbstractServiceImpl<Guest, GuestDao> implements ImportGuestsCsvService {
@@ -72,12 +74,16 @@ public class ImportGuestsCsvServiceImpl extends AbstractServiceImpl<Guest, Guest
         }
     }
 
-    private void setRoomAttributes(String[] line, Room room) {
+    private void setRoomAttributes(String[] line, Room room) throws IOException {
         room.setNumber(Integer.parseInt(line[5]));
         room.setPrice(Integer.parseInt(line[6]));
         room.setStatus(RoomStatusEnum.valueOf(line[7]));
         room.setMaxGuests(Integer.parseInt(line[8]));
         room.setStars(Integer.parseInt(line[9]));
+        FileInputStream fileInputStream = new FileInputStream("task-7/src/main/resources/app.properties");
+        Properties properties = new Properties();
+        properties.load(fileInputStream);
+        room.setMaxGuestsInHistory(Integer.parseInt(properties.getProperty("maxGuestInHistory")));
     }
 
     private void setGuestAttributes(String[] line, Guest guest) throws ParseException {
@@ -93,7 +99,7 @@ public class ImportGuestsCsvServiceImpl extends AbstractServiceImpl<Guest, Guest
         maintenance.setPrice(Integer.parseInt(line[12]));
     }
 
-    private Room roomCreationAndReturn(String[] line) {
+    private Room roomCreationAndReturn(String[] line) throws IOException {
         Room room = new Room();
         setRoomAttributes(line, room);
         roomDao.create(room);

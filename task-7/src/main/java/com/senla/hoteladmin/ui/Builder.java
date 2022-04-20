@@ -4,6 +4,7 @@ import com.senla.hoteladmin.controller.CsvController;
 import com.senla.hoteladmin.controller.GuestController;
 import com.senla.hoteladmin.controller.MaintenanceController;
 import com.senla.hoteladmin.controller.RoomController;
+import com.senla.hoteladmin.ui.action.SerializationAction;
 import com.senla.hoteladmin.ui.action.guest.DeleteGuestAction;
 import com.senla.hoteladmin.ui.action.guest.ExportGuestCsvAction;
 import com.senla.hoteladmin.ui.action.guest.GetGuestSortedByNameByEvicDateAction;
@@ -27,9 +28,11 @@ import com.senla.hoteladmin.ui.action.room.ExportRoomCsvAction;
 import com.senla.hoteladmin.ui.action.room.GetAllRoomSortedByPriceByMaxGuestsByStarsAction;
 import com.senla.hoteladmin.ui.action.room.GetFreeRoomSortedByPriceByMaxGuestsByStarsAction;
 import com.senla.hoteladmin.ui.action.room.GetLastThreeGuestAction;
+import com.senla.hoteladmin.ui.action.room.GetRoomHistoryAction;
 import com.senla.hoteladmin.ui.action.room.ImportRoomCsvAction;
 import com.senla.hoteladmin.ui.action.room.ListOfFreeRoomsByDateAction;
 import com.senla.hoteladmin.ui.action.room.RoomDetailsAction;
+import com.senla.hoteladmin.ui.action.room.SwitchCanChangeStatusAction;
 import com.senla.hoteladmin.ui.action.room.TotalNumberOfFreeRoomsAction;
 
 import java.util.Collections;
@@ -57,7 +60,7 @@ public class Builder {
                 new MenuItem("1) Раздел номеров", null, roomSectionMenu),
                 new MenuItem("2) Раздел гостей", null, guestSectionMenu),
                 new MenuItem("3) Раздел услуг", null, maintenanceSectionMenu),
-                new MenuItem("4) Выход", null, null));
+                new MenuItem("4) Сохранить и выйти", new SerializationAction(roomController, guestController, maintenanceController), null));
 
         roomSectionMenu.setName("Раздел номеров");
         Collections.addAll(roomSectionMenu.getMenuItems(),
@@ -66,15 +69,17 @@ public class Builder {
                 new MenuItem("3) Удалить гостей из номера", new DeleteFromRoomAction(roomController), null),
                 new MenuItem("4) Изменить статус номера", new ChangeStatusAction(roomController), null),
                 new MenuItem("5) Изменить цену номера", new ChangePriceToRoomAction(roomController), null),
-                new MenuItem("6) Вывести общее кол-во свободных номеров", new TotalNumberOfFreeRoomsAction(roomController), null),
-                new MenuItem("7) Вывести общее кол-во свободных номеров после определенной даты", new ListOfFreeRoomsByDateAction(roomController), null),
-                new MenuItem("8) Вывести все номера в сортированном виде", new GetAllRoomSortedByPriceByMaxGuestsByStarsAction(roomController), null),
-                new MenuItem("9) Вывести свободные номера в сортированном виде", new GetFreeRoomSortedByPriceByMaxGuestsByStarsAction(roomController), null),
-                new MenuItem("10) Вывести последних трех гостей номера", new GetLastThreeGuestAction(roomController), null),
-                new MenuItem("11) Вывести детали номера", new RoomDetailsAction(roomController), null),
-                new MenuItem("12) Экспорт комнат в csv", new ExportRoomCsvAction(csvController), null),
-                new MenuItem("13) Импорт комнат из csv", new ImportRoomCsvAction(csvController), null),
-                new MenuItem("14) Выход", null, rootMenu));
+                new MenuItem("6) Изменить возможность менять статус номера", new SwitchCanChangeStatusAction(roomController), null),
+                new MenuItem("7) Вывести общее кол-во свободных номеров", new TotalNumberOfFreeRoomsAction(roomController), null),
+                new MenuItem("8) Вывести общее кол-во свободных номеров после определенной даты", new ListOfFreeRoomsByDateAction(roomController), null),
+                new MenuItem("9) Вывести все номера в сортированном виде", new GetAllRoomSortedByPriceByMaxGuestsByStarsAction(roomController), null),
+                new MenuItem("10) Вывести свободные номера в сортированном виде", new GetFreeRoomSortedByPriceByMaxGuestsByStarsAction(roomController), null),
+                new MenuItem("11) Вывести последних трех гостей номера", new GetLastThreeGuestAction(roomController), null),
+                new MenuItem("12) Вывести историю гостей номера", new GetRoomHistoryAction(roomController), null),
+                new MenuItem("13) Вывести детали номера", new RoomDetailsAction(roomController), null),
+                new MenuItem("14) Экспорт комнат в csv", new ExportRoomCsvAction(csvController), null),
+                new MenuItem("15) Импорт комнат из csv", new ImportRoomCsvAction(csvController), null),
+                new MenuItem("16) Выход", null, rootMenu));
 
         guestSectionMenu.setName("Раздел гостей");
         Collections.addAll(guestSectionMenu.getMenuItems(),

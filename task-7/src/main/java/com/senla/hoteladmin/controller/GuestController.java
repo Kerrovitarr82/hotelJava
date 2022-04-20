@@ -1,5 +1,7 @@
 package com.senla.hoteladmin.controller;
 
+import java.io.IOException;
+
 public interface GuestController extends ControllerInterface {
     void deleteGuest();
 
@@ -8,4 +10,8 @@ public interface GuestController extends ControllerInterface {
     void totalNumberOfGuests();
 
     void getGuestSortedByNameByEvicDate();
+
+    void guestSerialization() throws IOException;
+
+    void guestDeserialization() throws IOException, ClassNotFoundException;
 }

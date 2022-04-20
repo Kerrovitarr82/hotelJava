@@ -12,10 +12,13 @@ import com.senla.hoteladmin.util.RoomSortEnum;
 import com.senla.hoteladmin.util.RoomStarsComparator;
 import com.senla.hoteladmin.util.RoomStatusEnum;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Stream;
 
 public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implements RoomService {
@@ -49,8 +52,7 @@ public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implemen
     }
 
     @Override
-    public void changeStatus(Long id, RoomStatusEnum status) {
-        Room room = roomDao.getById(id);
+    public void changeStatus(Room room, RoomStatusEnum status) {
         room.setStatus(status);
     }
 
@@ -58,6 +60,19 @@ public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implemen
     public void changePriceToRoom(Long id, int price) {
         Room room = roomDao.getById(id);
         room.setPrice(price);
+    }
+
+    @Override
+    public void switchCanChangeStatus(Room room) throws IOException {
+        FileInputStream fileInputStream = new FileInputStream("task-7/src/main/resources/app.properties");
+        Properties properties = new Properties();
+        properties.load(fileInputStream);
+        if (room.isCanChangeStatus()) {
+            room.setCanChangeStatus(Boolean.parseBoolean(properties.getProperty("canChangeStatus.false")));
+        } else {
+            room.setCanChangeStatus(Boolean.parseBoolean(properties.getProperty("canChangeStatus.true")));
+        }
+        System.out.println("Room canChangeStatus is: " + room.isCanChangeStatus());
     }
 
     @Override
@@ -106,6 +121,12 @@ public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implemen
     public String roomDetails(Long id) {
         Room room = roomDao.getById(id);
         return room.toString();
+    }
+
+    @Override
+    public String roomHistory(Long id) {
+        Room room = roomDao.getById(id);
+        return room.getHistoryOfGuests().toString();
     }
 
     private Stream<Room> allRoomsSort() {
