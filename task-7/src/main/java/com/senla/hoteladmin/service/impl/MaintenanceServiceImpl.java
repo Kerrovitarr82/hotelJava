@@ -9,8 +9,14 @@ import com.senla.hoteladmin.service.MaintenanceService;
 import com.senla.hoteladmin.util.MaintenanceDateComparator;
 import com.senla.hoteladmin.util.MaintenancePriceComparator;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Calendar;
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class MaintenanceServiceImpl extends AbstractServiceImpl<Maintenance, MaintenanceDao> implements MaintenanceService {
@@ -49,5 +55,24 @@ public class MaintenanceServiceImpl extends AbstractServiceImpl<Maintenance, Mai
         Comparator<Maintenance> maintenanceComparator = new MaintenancePriceComparator().thenComparing(new MaintenanceDateComparator());
         Guest guest = guestDao.getById(guestId);
         return guest.getMaintenances().stream().sorted(maintenanceComparator);
+    }
+
+    @Override
+    public void maintenanceSerialization(String fileName) throws IOException {
+        FileOutputStream fileOutputStream = new FileOutputStream("task-7/src/main/java/com/senla/hoteladmin/" + fileName);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(maintenanceDao.getAll());
+        objectOutputStream.close();
+        fileOutputStream.close();
+    }
+
+    @Override
+    public void maintenanceDeserialization(String fileName) throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream("task-7/src/main/java/com/senla/hoteladmin/" + fileName);
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        List<Maintenance> maintenances = (List<Maintenance>) objectInputStream.readObject();
+        maintenanceDao.setAll(maintenances);
+        objectInputStream.close();
+        fileInputStream.close();
     }
 }

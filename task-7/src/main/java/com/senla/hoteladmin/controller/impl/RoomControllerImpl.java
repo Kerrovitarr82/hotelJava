@@ -11,13 +11,9 @@ import com.senla.hoteladmin.util.RoomSortEnum;
 import com.senla.hoteladmin.util.RoomStatusEnum;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Properties;
 
 public class RoomControllerImpl implements RoomController {
@@ -166,21 +162,12 @@ public class RoomControllerImpl implements RoomController {
     }
 
     @Override
-    public void roomSerialization() throws IOException {
-        FileOutputStream fileOutputStream = new FileOutputStream("task-7/src/main/java/com/senla/hoteladmin/roomSave.ser");
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeObject(roomService.getAll());
-        objectOutputStream.close();
-        fileOutputStream.close();
+    public void roomSerialization(String fileName) throws IOException {
+        roomService.roomSerialization(fileName);
     }
 
     @Override
-    public void roomDeserialization() throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream("task-7/src/main/java/com/senla/hoteladmin/roomSave.ser");
-        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        List<Room> rooms = (List<Room>) objectInputStream.readObject();
-        roomService.setAll(rooms);
-        objectInputStream.close();
-        fileInputStream.close();
+    public void roomDeserialization(String fileName) throws IOException, ClassNotFoundException {
+        roomService.roomDeserialization(fileName);
     }
 }

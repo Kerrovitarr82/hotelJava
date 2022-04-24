@@ -6,11 +6,13 @@ import com.senla.hoteladmin.controller.GuestController;
 import com.senla.hoteladmin.controller.MaintenanceController;
 import com.senla.hoteladmin.controller.MenuController;
 import com.senla.hoteladmin.controller.RoomController;
+import com.senla.hoteladmin.controller.SerializationController;
 import com.senla.hoteladmin.controller.impl.CsvControllerImpl;
 import com.senla.hoteladmin.controller.impl.GuestControllerImpl;
 import com.senla.hoteladmin.controller.impl.MaintenanceControllerImpl;
 import com.senla.hoteladmin.controller.impl.MenuControllerImpl;
 import com.senla.hoteladmin.controller.impl.RoomControllerImpl;
+import com.senla.hoteladmin.controller.impl.SerializationControllerImpl;
 import com.senla.hoteladmin.dao.GuestDao;
 import com.senla.hoteladmin.dao.MaintenanceDao;
 import com.senla.hoteladmin.dao.RoomDao;
@@ -59,11 +61,13 @@ public class Main {
         GuestController guestController = new GuestControllerImpl(roomService, guestService);
         MaintenanceController maintenanceController = new MaintenanceControllerImpl(roomService, guestService, maintenanceService);
         CsvController csvController = new CsvControllerImpl(exportRoomCsvService, exportGuestCsvService, exportMaintenanceCsvService, importRoomsCsvService, importGuestsCsvService, importMaintenancesCsvService);
+        SerializationController serializationController = new SerializationControllerImpl(roomController, guestController, maintenanceController);
         Builder builder = new Builder(roomController, guestController, maintenanceController, csvController);
         Navigator navigator = new Navigator();
-        MenuController menuController = new MenuControllerImpl(roomController, guestController, maintenanceController, builder, navigator);
+        MenuController menuController = new MenuControllerImpl(builder, navigator, serializationController);
 
+        menuController.afterStart();
         menuController.run();
-
+        menuController.beforeExit();
     }
 }

@@ -8,14 +8,9 @@ import com.senla.hoteladmin.service.RoomService;
 import com.senla.hoteladmin.util.PrettyPrinterUtil;
 import com.senla.hoteladmin.util.ReaderUtil;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.util.Calendar;
-import java.util.List;
 
 public class MaintenanceControllerImpl implements MaintenanceController {
     private RoomService roomService;
@@ -81,21 +76,12 @@ public class MaintenanceControllerImpl implements MaintenanceController {
     }
 
     @Override
-    public void maintenanceSerialization() throws IOException {
-        FileOutputStream fileOutputStream = new FileOutputStream("task-7/src/main/java/com/senla/hoteladmin/maintenanceSave.ser");
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeObject(maintenanceService.getAll());
-        objectOutputStream.close();
-        fileOutputStream.close();
+    public void maintenanceSerialization(String fileName) throws IOException {
+        maintenanceService.maintenanceSerialization(fileName);
     }
 
     @Override
-    public void maintenanceDeserialization() throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream("task-7/src/main/java/com/senla/hoteladmin/maintenanceSave.ser");
-        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        List<Maintenance> maintenances = (List<Maintenance>) objectInputStream.readObject();
-        maintenanceService.setAll(maintenances);
-        objectInputStream.close();
-        fileInputStream.close();
+    public void maintenanceDeserialization(String fileName) throws IOException, ClassNotFoundException {
+        maintenanceService.maintenanceDeserialization(fileName);
     }
 }

@@ -1,18 +1,12 @@
 package com.senla.hoteladmin.controller.impl;
 
 import com.senla.hoteladmin.controller.GuestController;
-import com.senla.hoteladmin.dao.entity.Guest;
 import com.senla.hoteladmin.service.GuestService;
 import com.senla.hoteladmin.service.RoomService;
 import com.senla.hoteladmin.util.PrettyPrinterUtil;
 import com.senla.hoteladmin.util.ReaderUtil;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.List;
 
 public class GuestControllerImpl implements GuestController {
     private RoomService roomService;
@@ -53,22 +47,13 @@ public class GuestControllerImpl implements GuestController {
     }
 
     @Override
-    public void guestSerialization() throws IOException {
-        FileOutputStream fileOutputStream = new FileOutputStream("task-7/src/main/java/com/senla/hoteladmin/guestSave.ser");
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeObject(guestService.getAll());
-        objectOutputStream.close();
-        fileOutputStream.close();
+    public void guestSerialization(String fileName) throws IOException {
+        guestService.guestSerialization(fileName);
     }
 
     @Override
-    public void guestDeserialization() throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream("task-7/src/main/java/com/senla/hoteladmin/guestSave.ser");
-        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        List<Guest> guests = (List<Guest>) objectInputStream.readObject();
-        guestService.setAll(guests);
-        objectInputStream.close();
-        fileInputStream.close();
+    public void guestDeserialization(String fileName) throws IOException, ClassNotFoundException {
+        guestService.guestDeserialization(fileName);
     }
 
     private void getAllGuests() {

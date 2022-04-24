@@ -16,7 +16,7 @@ public interface MaintenanceController extends ControllerInterface {
 
     void getAll();
 
-    void maintenanceSerialization() throws IOException;
+    void maintenanceSerialization(String fileName) throws IOException;
 
-    void maintenanceDeserialization() throws IOException, ClassNotFoundException;
+    void maintenanceDeserialization(String fileName) throws IOException, ClassNotFoundException;
 }

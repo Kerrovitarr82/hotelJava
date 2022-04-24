@@ -13,7 +13,10 @@ import com.senla.hoteladmin.util.RoomStarsComparator;
 import com.senla.hoteladmin.util.RoomStatusEnum;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -127,6 +130,25 @@ public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implemen
     public String roomHistory(Long id) {
         Room room = roomDao.getById(id);
         return room.getHistoryOfGuests().toString();
+    }
+
+    @Override
+    public void roomSerialization(String fileName) throws IOException {
+        FileOutputStream fileOutputStream = new FileOutputStream("task-7/src/main/java/com/senla/hoteladmin/" + fileName);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(roomDao.getAll());
+        objectOutputStream.close();
+        fileOutputStream.close();
+    }
+
+    @Override
+    public void roomDeserialization(String fileName) throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream("task-7/src/main/java/com/senla/hoteladmin/" + fileName);
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        List<Room> rooms = (List<Room>) objectInputStream.readObject();
+        roomDao.setAll(rooms);
+        objectInputStream.close();
+        fileInputStream.close();
     }
 
     private Stream<Room> allRoomsSort() {

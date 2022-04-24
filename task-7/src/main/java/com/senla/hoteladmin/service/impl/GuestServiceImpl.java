@@ -10,8 +10,14 @@ import com.senla.hoteladmin.util.GuestAlphabetComparator;
 import com.senla.hoteladmin.util.GuestDateComparatorAscending;
 import com.senla.hoteladmin.util.RoomStatusEnum;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class GuestServiceImpl extends AbstractServiceImpl<Guest, GuestDao> implements GuestService {
@@ -56,5 +62,24 @@ public class GuestServiceImpl extends AbstractServiceImpl<Guest, GuestDao> imple
     public Stream<Guest> getGuestSortedByNameByEvicDate() {
         Comparator<Guest> guestComparator = new GuestAlphabetComparator().thenComparing(new GuestDateComparatorAscending());
         return guestDao.getAll().stream().filter(guest -> guest.getRoom() != null).sorted(guestComparator);
+    }
+
+    @Override
+    public void guestSerialization(String fileName) throws IOException {
+        FileOutputStream fileOutputStream = new FileOutputStream("task-7/src/main/java/com/senla/hoteladmin/" + fileName);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(guestDao.getAll());
+        objectOutputStream.close();
+        fileOutputStream.close();
+    }
+
+    @Override
+    public void guestDeserialization(String fileName) throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream("task-7/src/main/java/com/senla/hoteladmin/" + fileName);
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        List<Guest> guests = (List<Guest>) objectInputStream.readObject();
+        guestDao.setAll(guests);
+        objectInputStream.close();
+        fileInputStream.close();
     }
 }

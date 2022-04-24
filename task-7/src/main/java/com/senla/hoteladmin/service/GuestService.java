@@ -2,6 +2,7 @@ package com.senla.hoteladmin.service;
 
 import com.senla.hoteladmin.dao.entity.Guest;
 
+import java.io.IOException;
 import java.util.stream.Stream;
 
 public interface GuestService extends AbstractService<Guest> {
@@ -13,4 +14,7 @@ public interface GuestService extends AbstractService<Guest> {
 
     Stream<Guest> getGuestSortedByNameByEvicDate();
 
+    void guestSerialization(String fileName) throws IOException;
+
+    void guestDeserialization(String fileName) throws IOException, ClassNotFoundException;
 }

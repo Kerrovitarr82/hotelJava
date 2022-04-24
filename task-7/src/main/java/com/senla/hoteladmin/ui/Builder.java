@@ -4,7 +4,6 @@ import com.senla.hoteladmin.controller.CsvController;
 import com.senla.hoteladmin.controller.GuestController;
 import com.senla.hoteladmin.controller.MaintenanceController;
 import com.senla.hoteladmin.controller.RoomController;
-import com.senla.hoteladmin.ui.action.SerializationAction;
 import com.senla.hoteladmin.ui.action.guest.DeleteGuestAction;
 import com.senla.hoteladmin.ui.action.guest.ExportGuestCsvAction;
 import com.senla.hoteladmin.ui.action.guest.GetGuestSortedByNameByEvicDateAction;
@@ -60,7 +59,7 @@ public class Builder {
                 new MenuItem("1) Раздел номеров", null, roomSectionMenu),
                 new MenuItem("2) Раздел гостей", null, guestSectionMenu),
                 new MenuItem("3) Раздел услуг", null, maintenanceSectionMenu),
-                new MenuItem("4) Сохранить и выйти", new SerializationAction(roomController, guestController, maintenanceController), null));
+                new MenuItem("4) Сохранить и выйти", null, null));
 
         roomSectionMenu.setName("Раздел номеров");
         Collections.addAll(roomSectionMenu.getMenuItems(),

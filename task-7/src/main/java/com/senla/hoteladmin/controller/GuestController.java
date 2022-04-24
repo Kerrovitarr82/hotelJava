@@ -11,7 +11,7 @@ public interface GuestController extends ControllerInterface {
 
     void getGuestSortedByNameByEvicDate();
 
-    void guestSerialization() throws IOException;
+    void guestSerialization(String fileName) throws IOException;
 
-    void guestDeserialization() throws IOException, ClassNotFoundException;
+    void guestDeserialization(String fileName) throws IOException, ClassNotFoundException;
 }

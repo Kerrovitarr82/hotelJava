@@ -32,4 +32,8 @@ public interface RoomService extends AbstractService<Room> {
     String roomDetails(Long id);
 
     String roomHistory(Long id);
+
+    void roomSerialization(String fileName) throws IOException;
+
+    void roomDeserialization(String fileName) throws IOException, ClassNotFoundException;
 }

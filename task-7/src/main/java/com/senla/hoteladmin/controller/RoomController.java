@@ -30,9 +30,9 @@ public interface RoomController extends ControllerInterface {
 
     void roomHistory();
 
-    void roomSerialization() throws IOException;
+    void roomSerialization(String fileName) throws IOException;
 
-    void roomDeserialization() throws IOException, ClassNotFoundException;
+    void roomDeserialization(String fileName) throws IOException, ClassNotFoundException;
 
 
 }
