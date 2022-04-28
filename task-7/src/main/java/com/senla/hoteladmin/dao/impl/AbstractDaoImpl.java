@@ -2,9 +2,6 @@ package com.senla.hoteladmin.dao.impl;
 
 import com.senla.hoteladmin.dao.AbstractDao;
 import com.senla.hoteladmin.dao.entity.AbstractEntity;
-import com.senla.hoteladmin.dao.entity.Guest;
-import com.senla.hoteladmin.dao.entity.Room;
-import com.senla.hoteladmin.util.IdCreatorEnum;
 import com.senla.hoteladmin.util.IdCreatorForEntities;
 
 import java.util.ArrayList;
@@ -37,13 +34,7 @@ public abstract class AbstractDaoImpl<T extends AbstractEntity> implements Abstr
     }
 
     public void create(T entity) {
-        if (entity.getClass() == Room.class) {
-            entity.setId(idCreatorForEntities.createId(IdCreatorEnum.ROOM, (long) repository.size()));
-        } else if (entity.getClass() == Guest.class) {
-            entity.setId(idCreatorForEntities.createId(IdCreatorEnum.GUEST, (long) repository.size()));
-        } else {
-            entity.setId(idCreatorForEntities.createId(IdCreatorEnum.MAINTENANCE, (long) repository.size()));
-        }
+        entity.setId(idCreatorForEntities.createId(entity.getClass(), (long) repository.size()));
         repository.add(entity);
     }
 
