@@ -1,11 +1,13 @@
 package com.senla.hoteladmin.service.impl;
 
+import com.senla.hoteladmin.controller.impl.SerializationControllerImpl;
 import com.senla.hoteladmin.dao.GuestDao;
 import com.senla.hoteladmin.dao.MaintenanceDao;
 import com.senla.hoteladmin.dao.RoomDao;
 import com.senla.hoteladmin.dao.entity.Guest;
 import com.senla.hoteladmin.dao.entity.Room;
 import com.senla.hoteladmin.service.RoomService;
+import com.senla.hoteladmin.util.ReaderUtil;
 import com.senla.hoteladmin.util.RoomMaxGuestsComparator;
 import com.senla.hoteladmin.util.RoomPriceComparator;
 import com.senla.hoteladmin.util.RoomSortEnum;
@@ -67,9 +69,7 @@ public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implemen
 
     @Override
     public void switchCanChangeStatus(Room room) throws IOException {
-        FileInputStream fileInputStream = new FileInputStream("task-7/src/main/resources/app.properties");
-        Properties properties = new Properties();
-        properties.load(fileInputStream);
+        Properties properties = ReaderUtil.readProperties();
         if (room.isCanChangeStatus()) {
             room.setCanChangeStatus(Boolean.parseBoolean(properties.getProperty("canChangeStatus.false")));
         } else {
@@ -134,7 +134,7 @@ public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implemen
 
     @Override
     public void roomSerialization(String fileName) throws IOException {
-        FileOutputStream fileOutputStream = new FileOutputStream("task-7/src/main/java/com/senla/hoteladmin/" + fileName);
+        FileOutputStream fileOutputStream = new FileOutputStream(SerializationControllerImpl.PATH_TO_SER_FILE + fileName);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(roomDao.getAll());
         objectOutputStream.close();
@@ -143,7 +143,7 @@ public class RoomServiceImpl extends AbstractServiceImpl<Room, RoomDao> implemen
 
     @Override
     public void roomDeserialization(String fileName) throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream("task-7/src/main/java/com/senla/hoteladmin/" + fileName);
+        FileInputStream fileInputStream = new FileInputStream(SerializationControllerImpl.PATH_TO_SER_FILE + fileName);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         List<Room> rooms = (List<Room>) objectInputStream.readObject();
         roomDao.setAll(rooms);

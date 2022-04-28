@@ -1,7 +1,10 @@
 package com.senla.hoteladmin.util;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Properties;
 import java.util.Scanner;
 
 public class ReaderUtil {
@@ -28,5 +31,12 @@ public class ReaderUtil {
         String str = ReaderUtil.readLine();
         Calendar calendar = DateParserUtil.dateParseInDdMmYyyyFormat(str);
         return calendar;
+    }
+
+    public static Properties readProperties() throws IOException {
+        FileInputStream fileInputStream = new FileInputStream("task-7/src/main/resources/app.properties");
+        Properties properties = new Properties();
+        properties.load(fileInputStream);
+        return properties;
     }
 }

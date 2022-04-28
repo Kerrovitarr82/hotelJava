@@ -10,7 +10,6 @@ import com.senla.hoteladmin.util.ReaderUtil;
 import com.senla.hoteladmin.util.RoomSortEnum;
 import com.senla.hoteladmin.util.RoomStatusEnum;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -48,9 +47,7 @@ public class RoomControllerImpl implements RoomController {
         System.out.print("Введите количество звезд у номера: ");
         int stars = ReaderUtil.readInt();
         room.setStars(stars);
-        FileInputStream fileInputStream = new FileInputStream("task-7/src/main/resources/app.properties");
-        Properties properties = new Properties();
-        properties.load(fileInputStream);
+        Properties properties = ReaderUtil.readProperties();
         room.setMaxGuestsInHistory(Integer.parseInt(properties.getProperty("maxGuestInHistory")));
         roomService.create(room);
         System.out.println("Комната создана!");

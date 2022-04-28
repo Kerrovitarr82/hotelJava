@@ -1,5 +1,6 @@
 package com.senla.hoteladmin.service.impl;
 
+import com.senla.hoteladmin.controller.impl.SerializationControllerImpl;
 import com.senla.hoteladmin.dao.GuestDao;
 import com.senla.hoteladmin.dao.MaintenanceDao;
 import com.senla.hoteladmin.dao.RoomDao;
@@ -66,7 +67,7 @@ public class GuestServiceImpl extends AbstractServiceImpl<Guest, GuestDao> imple
 
     @Override
     public void guestSerialization(String fileName) throws IOException {
-        FileOutputStream fileOutputStream = new FileOutputStream("task-7/src/main/java/com/senla/hoteladmin/" + fileName);
+        FileOutputStream fileOutputStream = new FileOutputStream(SerializationControllerImpl.PATH_TO_SER_FILE + fileName);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(guestDao.getAll());
         objectOutputStream.close();
@@ -75,7 +76,7 @@ public class GuestServiceImpl extends AbstractServiceImpl<Guest, GuestDao> imple
 
     @Override
     public void guestDeserialization(String fileName) throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream("task-7/src/main/java/com/senla/hoteladmin/" + fileName);
+        FileInputStream fileInputStream = new FileInputStream(SerializationControllerImpl.PATH_TO_SER_FILE + fileName);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         List<Guest> guests = (List<Guest>) objectInputStream.readObject();
         guestDao.setAll(guests);

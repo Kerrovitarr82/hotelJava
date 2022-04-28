@@ -20,6 +20,8 @@ public class SerializationControllerImpl implements SerializationController {
         this.maintenanceController = maintenanceController;
     }
 
+    public static final String PATH_TO_SER_FILE = "task-7/src/main/java/com/senla/hoteladmin/";
+
     @Override
     public void entitiesSerialization() throws IOException {
         System.out.println("Введите имя файла в который надо сериализовать комнаты (с расширением)");
@@ -41,22 +43,22 @@ public class SerializationControllerImpl implements SerializationController {
     public void entitiesDeserialization() throws IOException, ClassNotFoundException {
         System.out.println("Введите имя файла из которого надо десериализовать комнаты (с расширением)");
         String fileName = ReaderUtil.readLine();
-        if (new File("task-7/src/main/java/com/senla/hoteladmin/" + fileName).exists()
-                && new File("task-7/src/main/java/com/senla/hoteladmin/" + fileName).length() != 0) {
+        if (new File(PATH_TO_SER_FILE + fileName).exists()
+                && new File(PATH_TO_SER_FILE + fileName).length() != 0) {
             roomController.roomDeserialization(fileName);
             System.out.println("Комнаты десериализованны!");
         }
         System.out.println("Введите имя файла из которого надо десериализовать гостей (с расширением)");
         fileName = ReaderUtil.readLine();
-        if (new File("task-7/src/main/java/com/senla/hoteladmin/" + fileName).exists()
-                && new File("task-7/src/main/java/com/senla/hoteladmin/" + fileName).length() != 0) {
+        if (new File(PATH_TO_SER_FILE + fileName).exists()
+                && new File(PATH_TO_SER_FILE + fileName).length() != 0) {
             guestController.guestDeserialization(fileName);
             System.out.println("Гости десериализованны!");
         }
         System.out.println("Введите имя файла из которого надо десериализовать услуги (с расширением)");
         fileName = ReaderUtil.readLine();
-        if (new File("task-7/src/main/java/com/senla/hoteladmin/" + fileName).exists()
-                && new File("task-7/src/main/java/com/senla/hoteladmin/" + fileName).length() != 0) {
+        if (new File(PATH_TO_SER_FILE + fileName).exists()
+                && new File(PATH_TO_SER_FILE + fileName).length() != 0) {
             maintenanceController.maintenanceDeserialization(fileName);
             System.out.println("Услуги десериализованны!");
         }

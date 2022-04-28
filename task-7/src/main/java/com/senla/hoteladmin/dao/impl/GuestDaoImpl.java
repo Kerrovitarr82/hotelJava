@@ -22,4 +22,6 @@ public class GuestDaoImpl extends AbstractDaoImpl<Guest> implements GuestDao {
         guest.setLastDay(new GregorianCalendar());
         guest.getLastDay().add(Calendar.DAY_OF_YEAR, days);
     }
+
+
 }

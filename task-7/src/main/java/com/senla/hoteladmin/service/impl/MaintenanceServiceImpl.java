@@ -1,5 +1,6 @@
 package com.senla.hoteladmin.service.impl;
 
+import com.senla.hoteladmin.controller.impl.SerializationControllerImpl;
 import com.senla.hoteladmin.dao.GuestDao;
 import com.senla.hoteladmin.dao.MaintenanceDao;
 import com.senla.hoteladmin.dao.RoomDao;
@@ -59,7 +60,7 @@ public class MaintenanceServiceImpl extends AbstractServiceImpl<Maintenance, Mai
 
     @Override
     public void maintenanceSerialization(String fileName) throws IOException {
-        FileOutputStream fileOutputStream = new FileOutputStream("task-7/src/main/java/com/senla/hoteladmin/" + fileName);
+        FileOutputStream fileOutputStream = new FileOutputStream(SerializationControllerImpl.PATH_TO_SER_FILE + fileName);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(maintenanceDao.getAll());
         objectOutputStream.close();
@@ -68,7 +69,7 @@ public class MaintenanceServiceImpl extends AbstractServiceImpl<Maintenance, Mai
 
     @Override
     public void maintenanceDeserialization(String fileName) throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream("task-7/src/main/java/com/senla/hoteladmin/" + fileName);
+        FileInputStream fileInputStream = new FileInputStream(SerializationControllerImpl.PATH_TO_SER_FILE + fileName);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         List<Maintenance> maintenances = (List<Maintenance>) objectInputStream.readObject();
         maintenanceDao.setAll(maintenances);
